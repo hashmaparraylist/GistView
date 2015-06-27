@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3BD470809C843EB7BBED795B /* libPods-GistView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 342026290C804E9475879977 /* libPods-GistView.a */; };
+		823725CB1B3F1AFF0054AEAE /* GitHubClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 823725CA1B3F1AFF0054AEAE /* GitHubClient.m */; };
 		82994E101B3DB9BF00B6FDE8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 82994E0F1B3DB9BF00B6FDE8 /* main.m */; };
 		82994E131B3DB9BF00B6FDE8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 82994E121B3DB9BF00B6FDE8 /* AppDelegate.m */; };
 		82994E161B3DB9BF00B6FDE8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82994E151B3DB9BF00B6FDE8 /* ViewController.m */; };
@@ -31,13 +32,15 @@
 		32330F415D31AA57AF1A8AC4 /* Pods-GistView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GistView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GistView/Pods-GistView.debug.xcconfig"; sourceTree = "<group>"; };
 		342026290C804E9475879977 /* libPods-GistView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GistView.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		77F28DD0C07AE92DD3EB8D3D /* Pods-GistView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GistView.release.xcconfig"; path = "Pods/Target Support Files/Pods-GistView/Pods-GistView.release.xcconfig"; sourceTree = "<group>"; };
+		823725C91B3F1AFF0054AEAE /* GitHubClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GitHubClient.h; sourceTree = "<group>"; };
+		823725CA1B3F1AFF0054AEAE /* GitHubClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GitHubClient.m; sourceTree = "<group>"; };
 		82994E0A1B3DB9BF00B6FDE8 /* GistView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GistView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82994E0E1B3DB9BF00B6FDE8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82994E0F1B3DB9BF00B6FDE8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		82994E111B3DB9BF00B6FDE8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		82994E121B3DB9BF00B6FDE8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		82994E141B3DB9BF00B6FDE8 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		82994E151B3DB9BF00B6FDE8 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		82994E141B3DB9BF00B6FDE8 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = ../ViewController.h; sourceTree = "<group>"; };
+		82994E151B3DB9BF00B6FDE8 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = ../ViewController.m; sourceTree = "<group>"; };
 		82994E181B3DB9BF00B6FDE8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		82994E1A1B3DB9BF00B6FDE8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		82994E1D1B3DB9BF00B6FDE8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -65,6 +68,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		823725C71B3F18A00054AEAE /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				82994E141B3DB9BF00B6FDE8 /* ViewController.h */,
+				82994E151B3DB9BF00B6FDE8 /* ViewController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		823725C81B3F18C80054AEAE /* GitHubClient */ = {
+			isa = PBXGroup;
+			children = (
+				823725C91B3F1AFF0054AEAE /* GitHubClient.h */,
+				823725CA1B3F1AFF0054AEAE /* GitHubClient.m */,
+			);
+			path = GitHubClient;
+			sourceTree = "<group>";
+		};
 		82994E011B3DB9BF00B6FDE8 = {
 			isa = PBXGroup;
 			children = (
@@ -88,10 +109,10 @@
 		82994E0C1B3DB9BF00B6FDE8 /* GistView */ = {
 			isa = PBXGroup;
 			children = (
+				823725C81B3F18C80054AEAE /* GitHubClient */,
+				823725C71B3F18A00054AEAE /* Controllers */,
 				82994E111B3DB9BF00B6FDE8 /* AppDelegate.h */,
 				82994E121B3DB9BF00B6FDE8 /* AppDelegate.m */,
-				82994E141B3DB9BF00B6FDE8 /* ViewController.h */,
-				82994E151B3DB9BF00B6FDE8 /* ViewController.m */,
 				82994E171B3DB9BF00B6FDE8 /* Main.storyboard */,
 				82994E1A1B3DB9BF00B6FDE8 /* Images.xcassets */,
 				82994E1C1B3DB9BF00B6FDE8 /* LaunchScreen.xib */,
@@ -281,6 +302,7 @@
 				82994E161B3DB9BF00B6FDE8 /* ViewController.m in Sources */,
 				82994E131B3DB9BF00B6FDE8 /* AppDelegate.m in Sources */,
 				82994E101B3DB9BF00B6FDE8 /* main.m in Sources */,
+				823725CB1B3F1AFF0054AEAE /* GitHubClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
