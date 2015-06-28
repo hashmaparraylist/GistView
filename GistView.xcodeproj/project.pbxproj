@@ -34,6 +34,7 @@
 		77F28DD0C07AE92DD3EB8D3D /* Pods-GistView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GistView.release.xcconfig"; path = "Pods/Target Support Files/Pods-GistView/Pods-GistView.release.xcconfig"; sourceTree = "<group>"; };
 		823725C91B3F1AFF0054AEAE /* GitHubClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GitHubClient.h; sourceTree = "<group>"; };
 		823725CA1B3F1AFF0054AEAE /* GitHubClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GitHubClient.m; sourceTree = "<group>"; };
+		823725CD1B3FE10F0054AEAE /* ServerDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServerDefine.h; sourceTree = "<group>"; };
 		82994E0A1B3DB9BF00B6FDE8 /* GistView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GistView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82994E0E1B3DB9BF00B6FDE8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82994E0F1B3DB9BF00B6FDE8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -82,6 +83,7 @@
 			children = (
 				823725C91B3F1AFF0054AEAE /* GitHubClient.h */,
 				823725CA1B3F1AFF0054AEAE /* GitHubClient.m */,
+				823725CD1B3FE10F0054AEAE /* ServerDefine.h */,
 			);
 			path = GitHubClient;
 			sourceTree = "<group>";

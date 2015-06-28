@@ -9,7 +9,7 @@
 			<string>org.coding4life.GistView</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>gistview://callback</string>
+				<string>gistview</string>
 			</array>
 		</dict>
 	</array>

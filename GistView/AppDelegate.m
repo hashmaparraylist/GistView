@@ -7,16 +7,23 @@
 //
 
 #import "AppDelegate.h"
+#import "GitHubClient.h"
 
 @interface AppDelegate ()
 
 @end
 
-@implementation AppDelegate
+@implementation AppDelegate {
+    GitHubClient *_sharedClient;
+}
 
+#pragma mark - Lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    _sharedClient = [GitHubClient sharedInstance];
+    if (_sharedClient.isAuthenticated) {
+        [_sharedClient authorize];
+    }
     return YES;
 }
 
@@ -41,5 +48,20 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+# pragma mark - UIApplicationDelegate
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    
+    NSLog(@"*** GitHub callback url: %@", url);
+    
+    if ([url.host isEqual:@"oauth"]) {
+        [_sharedClient completeAuthorizeWithCallbackURL:url];
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 
 @end
