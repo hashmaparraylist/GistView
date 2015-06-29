@@ -8,7 +8,13 @@
 
 #import <AFNetworking/AFNetworking.h>
 #import "GitHubClient.h"
+#import "GitHubUser.h"
 #import "ServerDefine.h"
+
+@interface GitHubClient ()
+@property (nonatomic, strong, readwrite) NSString *token;
+@property (nonatomic, strong, readwrite) GitHubUser *authenticatedUser;
+@end
 
 @implementation GitHubClient
 
@@ -41,6 +47,18 @@
     } else {
         return YES;
     }
+}
+
+- (GitHubUser *)authenticatedUser {
+    if (!self.isAuthenticated) {
+        return nil;
+    }
+    
+    if (_authenticatedUser == nil) {
+        // TODO get authenticated user
+    }
+    
+    return _authenticatedUser;
 }
 
 # pragma mark - Public
@@ -83,14 +101,12 @@
 
     [self postApiWithURL:urlString parameters:parameters needToken:NO success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *jsonObject = (NSDictionary *)responseObject;
-        if (jsonObject[@"error"]) {
-            
-        }
-        _token = jsonObject[@"access_token"];
+        self.token = jsonObject[@"access_token"];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(error);
     }];
 }
+
 
 # pragma mark - Private
 

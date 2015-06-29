@@ -21,10 +21,6 @@
 #pragma mark - Lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    _sharedClient = [GitHubClient sharedInstance];
-    if (!_sharedClient.isAuthenticated) {
-        [_sharedClient authorize];
-    }
     return YES;
 }
 
@@ -58,15 +54,15 @@
     
     if ([url.host isEqual:@"oauth"]) {
         [_sharedClient completeAuthorizeWithCallbackURL:url success:^(id responseObject) {
-//            UIViewController *rootView = [_main instantiateViewControllerWithIdentifier:@"main"];
-//            self.window.rootViewController = rootView;
+            UIViewController *rootView = [_main instantiateViewControllerWithIdentifier:@"main"];
+            [self.window.rootViewController presentViewController:rootView animated:YES completion:nil];
         } failure:^(NSError *error) {
-//            UIViewController *rootView = [_main instantiateViewControllerWithIdentifier:@"failureAuthorize"];
-//            self.window.rootViewController = rootView;
+            UIViewController *rootView = [_main instantiateViewControllerWithIdentifier:@"failureAuthorize"];
+            [self.window.rootViewController presentViewController:rootView animated:YES completion:nil];
         }];
     } else {
-//        UIViewController *failureView = [_main instantiateViewControllerWithIdentifier:@"failureAuthorize"];
-//        self.window.rootViewController = failureView;
+        UIViewController *rootView = [_main instantiateViewControllerWithIdentifier:@"failureAuthorize"];
+        [self.window.rootViewController presentViewController:rootView animated:YES completion:nil];
     }
     return YES;
 }

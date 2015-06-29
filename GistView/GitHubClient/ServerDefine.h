@@ -16,6 +16,7 @@ NSString * const BASE_WEB_URL = @"https://github.com";
 // API URL PATH
 NSString * const AUTHORIZE_API = @"%@/login/oauth/authorize?client_id=%@&scope=%@&state=%@";
 NSString * const ACCESS_TOKEN_API = @"%@/login/oauth/access_token";
+NSString * const AUTHENTICATED_USER_API = @"%@/user";
 
 // APP Setting
 NSString * const CLIENT_ID = @"fafb0af1c792afc8aac6";

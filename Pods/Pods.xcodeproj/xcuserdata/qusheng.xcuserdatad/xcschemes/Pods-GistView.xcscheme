@@ -14,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B1682A29EF07411D73268598"
-               BuildableName = "libPods-GistView.a"
+               BlueprintIdentifier = "CA161E41C6F4326C694D7964"
+               BuildableName = "Pods_GistView.framework"
                BlueprintName = "Pods-GistView"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>

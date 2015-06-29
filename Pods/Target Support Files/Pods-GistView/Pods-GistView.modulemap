@@ -1,0 +1,6 @@
+framework module Pods_GistView {
+  umbrella header "Pods-GistView-umbrella.h"
+
+  export *
+  module * { export * }
+}
