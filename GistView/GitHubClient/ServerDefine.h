@@ -21,5 +21,7 @@ NSString * const ACCESS_TOKEN_API = @"%@/login/oauth/access_token";
 NSString * const CLIENT_ID = @"fafb0af1c792afc8aac6";
 NSString * const CLIENT_SECRET = @"f30e7b2071b7dc763db53a38c0ad4528dadb013a";
 
+// API Common Error Code
+NSInteger const API_NSERROR_CODE = 9100;
 
 #endif

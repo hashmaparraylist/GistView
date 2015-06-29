@@ -61,7 +61,7 @@
     }
 }
 
-- (void)completeAuthorizeWithCallbackURL:(NSURL *)callbackURL {
+- (void)completeAuthorizeWithCallbackURL:(NSURL *)callbackURL success:(void (^)(id responseObject))success failure:(void(^)(NSError *error))failure {
     NSString *queryString = callbackURL.query;
 
     NSMutableDictionary *queryStringDictionary = [[NSMutableDictionary alloc] init];
@@ -79,24 +79,81 @@
     NSString *baseURLString = [BASE_WEB_URL stringByTrimmingCharactersInSet:slashSet];
     NSString *urlString = [[NSString alloc] initWithFormat: ACCESS_TOKEN_API, baseURLString];
     
-    NSDictionary *parameters = @{@"client_id" : CLIENT_ID, @"client_secret" : CLIENT_SECRET, @"code" : queryStringDictionary[@"code"]};
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        // Success
-        NSLog(@"Success: %@", responseObject);
+    NSDictionary *parameters = @{@"client_id" : CLIENT_ID, @"client_secret" : CLIENT_SECRET, @"code1" : queryStringDictionary[@"code"]};
+
+    [self postApiWithURL:urlString parameters:parameters needToken:NO success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *jsonObject = (NSDictionary *)responseObject;
+        if (jsonObject[@"error"]) {
+            
+        }
+        _token = jsonObject[@"access_token"];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        // Error
-        NSLog(@"Error: %@", error);
+        failure(error);
     }];
-    
-    
 }
 
 # pragma mark - Private
 
-- (BOOL) openURL:(NSURL *)URL {
+- (void)postApiWithURL:(NSString *)apiURL
+            parameters:(NSDictionary *)parameters
+             needToken:(BOOL)isNeedToken
+               success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    NSLog(@"POST => [%@]", apiURL);
+    AFHTTPRequestOperationManager *manager = [self makeOperationManagerNeedToken:YES];
+    [manager POST:apiURL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"POST SUCCESS => Response[%@]", responseObject);
+        if ([self isResponseError:responseObject]) {
+            NSError *error = [[NSError alloc]initWithDomain:NSOSStatusErrorDomain code:API_NSERROR_CODE userInfo:responseObject];
+            failure(operation, error);
+            return;
+        }
+        success(operation, responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"POST Failure => STATUS CODE:%ld, Error: %@", (long)operation.response.statusCode, error);
+        failure(operation, error);
+    }];
+}
+
+- (void)getApiWithURL:(NSString *)apiURL
+           parameters:(NSDictionary *)parameters
+            needToken:(BOOL)isNeedToken
+              success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    NSLog(@"GET => [%@]", apiURL);
+    AFHTTPRequestOperationManager *manager = [self makeOperationManagerNeedToken:YES];
+    [manager GET:apiURL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"POST SUCCESS => Response[%@]", responseObject);
+        if ([self isResponseError:responseObject]) {
+            NSError *error = [[NSError alloc]initWithDomain:NSOSStatusErrorDomain code:API_NSERROR_CODE userInfo:responseObject];
+            failure(operation, error);
+            return;
+        }
+        success(operation, responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"POST Failure => STATUS CODE:%ld, Error: %@", (long)operation.response.statusCode, error);
+        failure(operation, error);
+    }];
+}
+
+- (AFHTTPRequestOperationManager *)makeOperationManagerNeedToken: (BOOL)isNeedToken {
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    if (isNeedToken) {
+        [manager.requestSerializer setValue:[NSString stringWithFormat:@"token %@", self.token] forHTTPHeaderField:@"Authorization"];
+    }
+    return manager;
+}
+
+- (BOOL) isResponseError:(NSDictionary *)response {
+    if (response[@"error"] != nil) {
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (BOOL)openURL:(NSURL *)URL {
     NSLog(@"open url=%@", URL);
     NSParameterAssert(URL != nil);
     if ([UIApplication.sharedApplication canOpenURL:URL]) {

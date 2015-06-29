@@ -15,13 +15,14 @@
 
 @implementation AppDelegate {
     GitHubClient *_sharedClient;
+    UIStoryboard *_main;
 }
 
 #pragma mark - Lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     _sharedClient = [GitHubClient sharedInstance];
-    if (_sharedClient.isAuthenticated) {
+    if (!_sharedClient.isAuthenticated) {
         [_sharedClient authorize];
     }
     return YES;
@@ -56,11 +57,18 @@
     NSLog(@"*** GitHub callback url: %@", url);
     
     if ([url.host isEqual:@"oauth"]) {
-        [_sharedClient completeAuthorizeWithCallbackURL:url];
-        return YES;
+        [_sharedClient completeAuthorizeWithCallbackURL:url success:^(id responseObject) {
+//            UIViewController *rootView = [_main instantiateViewControllerWithIdentifier:@"main"];
+//            self.window.rootViewController = rootView;
+        } failure:^(NSError *error) {
+//            UIViewController *rootView = [_main instantiateViewControllerWithIdentifier:@"failureAuthorize"];
+//            self.window.rootViewController = rootView;
+        }];
     } else {
-        return NO;
+//        UIViewController *failureView = [_main instantiateViewControllerWithIdentifier:@"failureAuthorize"];
+//        self.window.rootViewController = failureView;
     }
+    return YES;
 }
 
 

@@ -15,7 +15,7 @@
 + (instancetype)sharedInstance;
 
 // 通过callback url中包含的code，获取token,完成登陆过程
-- (void)completeAuthorizeWithCallbackURL:(NSURL *)callbackURL;
+- (void)completeAuthorizeWithCallbackURL:(NSURL *)callbackURL success:(void (^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 
 // 认证 (通过GitHub's oauth2.0)
 - (void)authorize;
