@@ -25,4 +25,10 @@ NSString * const CLIENT_SECRET = @"f30e7b2071b7dc763db53a38c0ad4528dadb013a";
 // API Common Error Code
 NSInteger const API_NSERROR_CODE = 9100;
 
+// NSError Domain
+NSString * const GithubClientErrorDomain = @"GithubClientErrorDomain";
+
+// NSError Code
+NSInteger const GithubClientErrorOpeningBrowserFailed = 9001;
+
 #endif

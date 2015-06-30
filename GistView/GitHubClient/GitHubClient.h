@@ -8,6 +8,7 @@
 
 #import <AFNetworking/AFNetworking.h>
 #import <Foundation/Foundation.h>
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 @class GitHubUser;
 
