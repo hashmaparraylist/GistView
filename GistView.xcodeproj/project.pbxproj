@@ -35,7 +35,6 @@
 		77F28DD0C07AE92DD3EB8D3D /* Pods-GistView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GistView.release.xcconfig"; path = "Pods/Target Support Files/Pods-GistView/Pods-GistView.release.xcconfig"; sourceTree = "<group>"; };
 		823725C91B3F1AFF0054AEAE /* GitHubClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GitHubClient.h; sourceTree = "<group>"; };
 		823725CA1B3F1AFF0054AEAE /* GitHubClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GitHubClient.m; sourceTree = "<group>"; };
-		823725CD1B3FE10F0054AEAE /* ServerDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServerDefine.h; sourceTree = "<group>"; };
 		825E57A11B417AD200C84050 /* LoadingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingViewController.h; sourceTree = "<group>"; };
 		825E57A21B417AD200C84050 /* LoadingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingViewController.m; sourceTree = "<group>"; };
 		825E57A41B4183C900C84050 /* GitHubUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GitHubUser.h; sourceTree = "<group>"; };
@@ -77,7 +76,6 @@
 			children = (
 				823725C91B3F1AFF0054AEAE /* GitHubClient.h */,
 				823725CA1B3F1AFF0054AEAE /* GitHubClient.m */,
-				823725CD1B3FE10F0054AEAE /* ServerDefine.h */,
 				825E57A41B4183C900C84050 /* GitHubUser.h */,
 				825E57A51B4183C900C84050 /* GitHubUser.m */,
 			);

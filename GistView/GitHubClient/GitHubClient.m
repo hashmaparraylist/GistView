@@ -9,7 +9,6 @@
 #import <AFNetworking/AFNetworking.h>
 #import "GitHubClient.h"
 #import "GitHubUser.h"
-#import "ServerDefine.h"
 
 @interface GitHubClient ()
 @property (nonatomic, strong, readwrite) NSString *token;
@@ -69,19 +68,27 @@
     CFRelease(uuid);
     
     NSCharacterSet *slashSet = [NSCharacterSet characterSetWithCharactersInString:@"/"];
-    NSString *baseURLString = [BASE_WEB_URL stringByTrimmingCharactersInSet:slashSet];
+    NSString *baseURLString = [GithubBaseWebURL stringByTrimmingCharactersInSet:slashSet];
     
-    NSString *urlString = [[NSString alloc] initWithFormat: AUTHORIZE_API, baseURLString, CLIENT_ID, @"gist", uuidString];
+    NSString *urlString = [[NSString alloc] initWithFormat: GithubApiAuthorize, baseURLString, GithubClientID, @"gist", uuidString];
     NSURL *webUrl = [NSURL URLWithString:urlString];
     
     if(![self openURL:webUrl]) {
         // Error Handle
+        NSError *error = [NSError errorWithDomain:GithubClientErrorDomain
+                                             code:GithubClientErrorOpeningBrowserFailed
+                                         userInfo:@{
+                                                    @"code" : @(GithubClientErrorOpeningBrowserFailed),
+                                                    @"message" : @"无法打开浏览器，请确认你是否设置了默认的浏览器"
+                                                    }];
+        [[NSNotificationCenter defaultCenter] postNotificationName:GithubAuthenticatedNotifiactionFailure object:error];
     }
 }
 
-- (void)completeAuthorizeWithCallbackURL:(NSURL *)callbackURL success:(void (^)(id responseObject))success failure:(void(^)(NSError *error))failure {
+- (void)completeAuthorizeWithCallbackURL:(NSURL *)callbackURL {
+    
+    // 从callback url中取得temporary code
     NSString *queryString = callbackURL.query;
-
     NSMutableDictionary *queryStringDictionary = [[NSMutableDictionary alloc] init];
     NSArray *urlComponents = [queryString componentsSeparatedByString:@"&"];
     
@@ -94,62 +101,61 @@
     }
     
     NSCharacterSet *slashSet = [NSCharacterSet characterSetWithCharactersInString:@"/"];
-    NSString *baseURLString = [BASE_WEB_URL stringByTrimmingCharactersInSet:slashSet];
-    NSString *urlString = [[NSString alloc] initWithFormat: ACCESS_TOKEN_API, baseURLString];
+    NSString *baseURLString = [GithubBaseWebURL stringByTrimmingCharactersInSet:slashSet];
+    NSString *urlString = [[NSString alloc] initWithFormat: GithubApiAccessToken, baseURLString];
     
-    NSDictionary *parameters = @{@"client_id" : CLIENT_ID, @"client_secret" : CLIENT_SECRET, @"code1" : queryStringDictionary[@"code"]};
+    NSDictionary *parameters = @{@"client_id" : GithubClientID, @"client_secret" : GithubClientSecret, @"code1" : queryStringDictionary[@"code"]};
 
     [self postApiWithURL:urlString parameters:parameters needToken:NO success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *jsonObject = (NSDictionary *)responseObject;
+        // temporary code 过期
+        if (jsonObject[@"error"] != nil) {
+            NSError *error = [NSError errorWithDomain:GithubClientErrorDomain
+                                                 code:GithubClientErrorAuthenticationFailed
+                                             userInfo:@{
+                                                        @"code" : @(GithubClientErrorAuthenticationFailed),
+                                                        @"message" : jsonObject[@"error_description"]
+                                                        }];
+            [[NSNotificationCenter defaultCenter] postNotificationName:GithubAuthenticatedNotifiactionFailure object:error];
+        }
         self.token = jsonObject[@"access_token"];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failure(error);
+        [[NSNotificationCenter defaultCenter] postNotificationName:GithubAuthenticatedNotifiactionFailure object:error];
     }];
 }
 
-
-
 # pragma mark - Private
 
-- (void)postApiWithURL:(NSString *)apiURL
-            parameters:(NSDictionary *)parameters
-             needToken:(BOOL)isNeedToken
+// 通过POST方法请求API
+- (void)postApiWithURL:(NSString *)apiURL parameters:(NSDictionary *)parameters needToken:(BOOL)isNeedToken
                success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    
     NSLog(@"POST => [%@]", apiURL);
     AFHTTPRequestOperationManager *manager = [self makeOperationManagerNeedToken:YES];
     [manager POST:apiURL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"POST SUCCESS => Response[%@]", responseObject);
-        if ([self isResponseError:responseObject]) {
-            NSError *error = [[NSError alloc]initWithDomain:NSOSStatusErrorDomain code:API_NSERROR_CODE userInfo:responseObject];
-            failure(operation, error);
-            return;
-        }
         success(operation, responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"POST Failure => STATUS CODE:%ld, Error: %@", (long)operation.response.statusCode, error);
-        failure(operation, error);
+        NSError *errorInfo = [self errorFromRequestOperation:operation];
+        failure(operation, errorInfo);
     }];
 }
 
-- (void)getApiWithURL:(NSString *)apiURL
-           parameters:(NSDictionary *)parameters
-            needToken:(BOOL)isNeedToken
+// 通过GET方法请求API
+- (void)getApiWithURL:(NSString *)apiURL parameters:(NSDictionary *)parameters needToken:(BOOL)isNeedToken
               success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
     NSLog(@"GET => [%@]", apiURL);
     AFHTTPRequestOperationManager *manager = [self makeOperationManagerNeedToken:YES];
     [manager GET:apiURL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"POST SUCCESS => Response[%@]", responseObject);
-        if ([self isResponseError:responseObject]) {
-            NSError *error = [[NSError alloc]initWithDomain:NSOSStatusErrorDomain code:API_NSERROR_CODE userInfo:responseObject];
-            failure(operation, error);
-            return;
-        }
         success(operation, responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"POST Failure => STATUS CODE:%ld, Error: %@", (long)operation.response.statusCode, error);
-        failure(operation, error);
+        NSError *errorInfo = [self errorFromRequestOperation:operation];
+        failure(operation, errorInfo);
     }];
 }
 
@@ -162,14 +168,7 @@
     return manager;
 }
 
-- (BOOL) isResponseError:(NSDictionary *)response {
-    if (response[@"error"] != nil) {
-        return YES;
-    }
-    
-    return NO;
-}
-
+// 通过系统浏览器打开URL
 - (BOOL)openURL:(NSURL *)URL {
     NSLog(@"open url=%@", URL);
     NSParameterAssert(URL != nil);
@@ -180,5 +179,84 @@
         return NO;
     }
 }
+
+// 获取API调用的错误信息
+- (NSError *)errorFromRequestOperation:(AFHTTPRequestOperation *)operation {
+
+    NSInteger HTTPCode = operation.response.statusCode;
+    NSMutableDictionary *errorInfo = [NSMutableDictionary dictionary];
+    NSInteger errorCode = GithubClientErrorConnectionFailed;
+    NSString *errorMessage = [self errorUserInfoFromRequestOperation:operation];
+    switch (HTTPCode) {
+        case 401:
+            errorCode = GithubClientErrorAuthenticationFailed;
+            break;
+        case 400:
+            errorCode = GithubClientErrorBadRequest;
+            break;
+        case 403:
+            errorCode = GithubClientErrorRequestForbidden;
+            break;
+        case 422:
+            errorCode = GithubClientErrorServiceRequestFailed;
+            break;
+        default:
+            if ([operation.error.domain isEqual:NSURLErrorDomain]) {
+                switch (operation.error.code) {
+                    case NSURLErrorSecureConnectionFailed:
+                    case NSURLErrorServerCertificateHasBadDate:
+                    case NSURLErrorServerCertificateHasUnknownRoot:
+                    case NSURLErrorServerCertificateUntrusted:
+                    case NSURLErrorServerCertificateNotYetValid:
+                    case NSURLErrorClientCertificateRejected:
+                    case NSURLErrorClientCertificateRequired:
+                        errorCode = GithubClientErrorSecureConnectionFailed;
+                        break;
+                }
+            }
+            break;
+    }
+    
+    errorInfo[@"code"] = @(errorCode);
+    errorInfo[@"message"] = errorMessage;
+    
+    return [[NSError alloc]initWithDomain:GithubClientErrorDomain code:errorCode userInfo:errorInfo];
+}
+
+// 从response中获取错误信息
+-(NSString *)errorUserInfoFromRequestOperation:(AFHTTPRequestOperation *)operation {
+    NSParameterAssert(operation != nil);
+    
+    NSDictionary *responseDictionary = nil;
+  
+    id JSON = [operation responseObject];
+    if ([JSON isKindOfClass:NSDictionary.class]) {
+        responseDictionary = JSON;
+    } else {
+        NSLog(@"Unexpected JSON for error response: %@", JSON);
+    }
+    
+    
+    NSString *message = responseDictionary[@"message"];
+    
+    NSArray *errorDictionaries = responseDictionary[@"errors"];
+    NSString *errorMesage;
+    if ([errorDictionaries isKindOfClass:NSArray.class]) {
+        for (NSDictionary *errorDictionary in errorDictionaries) {
+            NSString *error = errorDictionary[@"message"];
+            errorMesage = [NSString stringWithFormat:@"%@:\n\n%@", errorMesage, error];
+        }
+    }
+    
+    if (message != nil) {
+        return message;
+    }
+    if (errorMesage != nil) {
+       return errorMesage;
+    }
+    
+    return @"";
+}
+
 
 @end

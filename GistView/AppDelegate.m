@@ -49,22 +49,12 @@
 # pragma mark - UIApplicationDelegate
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    
     NSLog(@"*** GitHub callback url: %@", url);
-    
     if ([url.host isEqual:@"oauth"]) {
-        [_sharedClient completeAuthorizeWithCallbackURL:url success:^(id responseObject) {
-            UIViewController *rootView = [_main instantiateViewControllerWithIdentifier:@"main"];
-            [self.window.rootViewController presentViewController:rootView animated:YES completion:nil];
-        } failure:^(NSError *error) {
-            UIViewController *rootView = [_main instantiateViewControllerWithIdentifier:@"failureAuthorize"];
-            [self.window.rootViewController presentViewController:rootView animated:YES completion:nil];
-        }];
-    } else {
-        UIViewController *rootView = [_main instantiateViewControllerWithIdentifier:@"failureAuthorize"];
-        [self.window.rootViewController presentViewController:rootView animated:YES completion:nil];
+        [_sharedClient completeAuthorizeWithCallbackURL:url];
+        return YES;
     }
-    return YES;
+    return NO;
 }
 
 

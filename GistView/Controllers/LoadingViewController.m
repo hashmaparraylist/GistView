@@ -18,9 +18,19 @@
 }
 
 # pragma mark - Lifecycle
+
+- (instancetype)init {
+    if (self = [super init]) {
+        _sharedClient = [GitHubClient sharedInstance];
+        // 注册NSNotification
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(authorizedSuccess:) name:GithubAuthenticatedNotifiactionSuccess object:nil];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(authorizedFailure:) name:GithubAuthenticatedNotifiactionFailure object:nil];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _sharedClient = [GitHubClient sharedInstance];
     if (!_sharedClient.isAuthenticated) {
         [_sharedClient authorize];
     }
@@ -28,6 +38,20 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+
+#pragma mark - Private
+
+// oauth认证成功
+- (void)authorizedSuccess:(NSDictionary *) params {
+}
+
+// oauth认证失败
+- (void)authorizedFailure:(NSError *) error {
 }
 
 
