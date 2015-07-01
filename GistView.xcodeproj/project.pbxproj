@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		821D8C441B4438DC009EADB4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 821D8C431B4438DC009EADB4 /* CoreGraphics.framework */; };
 		823725CB1B3F1AFF0054AEAE /* GitHubClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 823725CA1B3F1AFF0054AEAE /* GitHubClient.m */; };
 		825E57A31B417AD200C84050 /* LoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 825E57A21B417AD200C84050 /* LoadingViewController.m */; };
 		825E57A61B4183C900C84050 /* GitHubUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 825E57A51B4183C900C84050 /* GitHubUser.m */; };
@@ -33,6 +34,7 @@
 		32330F415D31AA57AF1A8AC4 /* Pods-GistView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GistView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GistView/Pods-GistView.debug.xcconfig"; sourceTree = "<group>"; };
 		7529C3B2C03AF6EE879C6125 /* Pods_GistView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GistView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		77F28DD0C07AE92DD3EB8D3D /* Pods-GistView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GistView.release.xcconfig"; path = "Pods/Target Support Files/Pods-GistView/Pods-GistView.release.xcconfig"; sourceTree = "<group>"; };
+		821D8C431B4438DC009EADB4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		823725C91B3F1AFF0054AEAE /* GitHubClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GitHubClient.h; sourceTree = "<group>"; };
 		823725CA1B3F1AFF0054AEAE /* GitHubClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GitHubClient.m; sourceTree = "<group>"; };
 		825E57A11B417AD200C84050 /* LoadingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingViewController.h; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				821D8C441B4438DC009EADB4 /* CoreGraphics.framework in Frameworks */,
 				FE0DCA191FA177A454ACD3FE /* Pods_GistView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -164,6 +167,7 @@
 		FFF72BA1CE719F0CCAE53892 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				821D8C431B4438DC009EADB4 /* CoreGraphics.framework */,
 				7529C3B2C03AF6EE879C6125 /* Pods_GistView.framework */,
 			);
 			name = Frameworks;

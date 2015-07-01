@@ -6,8 +6,9 @@
 //  Copyright (c) 2015年 Sebastian Qu. All rights reserved.
 //
 
-#import "LoadingViewController.h"
+#import <MBProgressHUD/MBProgressHUD.h>
 #import "GitHubClient.h"
+#import "LoadingViewController.h"
 
 @interface LoadingViewController ()
 
@@ -15,22 +16,17 @@
 
 @implementation LoadingViewController {
     GitHubClient *_sharedClient;
+//    MBProgressHUD *_hud;
 }
 
 # pragma mark - Lifecycle
 
-- (instancetype)init {
-    if (self = [super init]) {
-        _sharedClient = [GitHubClient sharedInstance];
-        // 注册NSNotification
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(authorizedSuccess:) name:GithubAuthenticatedNotifiactionSuccess object:nil];
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(authorizedFailure:) name:GithubAuthenticatedNotifiactionFailure object:nil];
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // 注册NSNotification
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(authorizedSuccess:) name:GithubAuthenticatedNotifiactionSuccess object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(authorizedFailure:) name:GithubAuthenticatedNotifiactionFailure object:nil];
+    _sharedClient = [GitHubClient sharedInstance];
     if (!_sharedClient.isAuthenticated) {
         [_sharedClient authorize];
     }
@@ -47,11 +43,22 @@
 #pragma mark - Private
 
 // oauth认证成功
-- (void)authorizedSuccess:(NSDictionary *) params {
+- (void)authorizedSuccess:(NSNotification *) userInfo {
+    
 }
 
 // oauth认证失败
-- (void)authorizedFailure:(NSError *) error {
+- (void)authorizedFailure:(NSNotification *) error {
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    NSDictionary *errorInfo = [error object];
+    NSString *errorMessage = errorInfo[@"message"];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"错误"
+                                                    message:errorMessage
+                                                   delegate:self
+                                          cancelButtonTitle:@"确认"
+                                          otherButtonTitles:nil];
+    
+    [alert show];
 }
 
 

@@ -6,6 +6,7 @@
 //  Copyright (c) 2015年 Sebastian Qu. All rights reserved.
 //
 
+#import <MBProgressHUD/MBProgressHUD.h>
 #import "AppDelegate.h"
 #import "GitHubClient.h"
 
@@ -13,10 +14,7 @@
 
 @end
 
-@implementation AppDelegate {
-    GitHubClient *_sharedClient;
-    UIStoryboard *_main;
-}
+@implementation AppDelegate
 
 #pragma mark - Lifecycle
 
@@ -51,7 +49,10 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     NSLog(@"*** GitHub callback url: %@", url);
     if ([url.host isEqual:@"oauth"]) {
-        [_sharedClient completeAuthorizeWithCallbackURL:url];
+        MBProgressHUD *_hud = [MBProgressHUD showHUDAddedTo:self.window.rootViewController.view animated:YES];
+        _hud.mode = MBProgressHUDModeDeterminate;
+        _hud.labelText = @"认证中...";
+        [[GitHubClient sharedInstance] completeAuthorizeWithCallbackURL:url];
         return YES;
     }
     return NO;

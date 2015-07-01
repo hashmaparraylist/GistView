@@ -9,6 +9,8 @@
 #import <AFNetworking/AFNetworking.h>
 #import <Foundation/Foundation.h>
 
+#ifndef _GITHUBCLIENT_
+#define _GITHUBCLIENT_
 static NSString * const GithubAuthenticatedNotifiactionSuccess = @"GithubAuthenticatedNotifiactionSuccess";
 static NSString * const GithubAuthenticatedNotifiactionFailure = @"GithubAuthenticatedNotifiactionFailure";
 
@@ -26,7 +28,7 @@ static NSString * const GithubClientID = @"fafb0af1c792afc8aac6";
 static NSString * const GithubClientSecret = @"f30e7b2071b7dc763db53a38c0ad4528dadb013a";
 
 // NSError Domain
-NSString * const GithubClientErrorDomain = @"GithubClientErrorDomain";
+static NSString * const GithubClientErrorDomain = @"GithubClientErrorDomain";
 
 // NSError Code
 static NSInteger const GithubClientErrorAuthenticationFailed = 9001;
@@ -41,6 +43,8 @@ static NSInteger const GithubClientErrorRequestForbidden = 9009;
 static NSInteger const GithubClientErrorTokenAuthenticationUnsupported = 9010;
 static NSInteger const GithubClientErrorUnsupportedServerScheme = 9011;
 static NSInteger const GithubClientErrorSecureConnectionFailed = 9012;
+
+#endif
 
 @class GitHubUser;
 

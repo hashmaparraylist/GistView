@@ -22,16 +22,11 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="bvs-hq-zH1">
-                                <rect key="frame" x="290" y="340" width="20" height="20"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="nGK-4G-UyU" secondAttribute="centerX" id="5pU-wT-nlB"/>
-                            <constraint firstItem="bvs-hq-zH1" firstAttribute="top" secondItem="nGK-4G-UyU" secondAttribute="top" constant="51" id="DO1-4y-tAg"/>
                             <constraint firstAttribute="centerY" secondItem="nGK-4G-UyU" secondAttribute="centerY" id="bVW-Fv-hf3"/>
-                            <constraint firstAttribute="centerX" secondItem="bvs-hq-zH1" secondAttribute="centerX" id="j9D-OF-oiO"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -63,33 +58,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="788" y="58"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="ich-4l-doJ">
-            <objects>
-                <viewController storyboardIdentifier="failureAuthorize" id="XsB-9o-pR9" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Mr3-JS-cHV"/>
-                        <viewControllerLayoutGuide type="bottom" id="j70-Dz-Ik2"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="GKg-j3-6kc">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Failure" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BTd-cZ-xuT">
-                                <rect key="frame" x="25" y="70" width="51" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fcR-TW-BOq" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="788" y="741"/>
+            <point key="canvasLocation" x="771" y="365"/>
         </scene>
     </scenes>
 </document>
