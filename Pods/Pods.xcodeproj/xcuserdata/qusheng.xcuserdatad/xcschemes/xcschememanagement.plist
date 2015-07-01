@@ -9,7 +9,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-GistView-ReactiveCocoa.xcscheme</key>
+		<key>Pods-GistView-MBProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -21,32 +21,6 @@
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
-	<dict>
-		<key>090DA69800D1225506C96E4A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>2A88CC6D86392B1E2F480F01</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>3A0BF88739250526E4650845</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>B1682A29EF07411D73268598</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>CA161E41C6F4326C694D7964</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-	</dict>
+	<dict/>
 </dict>
 </plist>
