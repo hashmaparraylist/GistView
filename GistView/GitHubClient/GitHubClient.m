@@ -106,7 +106,7 @@
     
     NSDictionary *parameters = @{@"client_id" : GitHubClientID, @"client_secret" : GitHubClientSecret, @"code" : queryStringDictionary[@"code"]};
 
-    [self postApiWithURL:urlString parameters:parameters needToken:NO success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self callApiByMethod:@"POST" url:urlString parameters:parameters needToken:NO success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *jsonObject = (NSDictionary *)responseObject;
         // temporary code 过期
         if (jsonObject[@"error"] != nil) {
@@ -124,39 +124,41 @@
     }];
 }
 
-# pragma mark - Private
-
-// 通过POST方法请求API
-- (void)postApiWithURL:(NSString *)apiURL parameters:(NSDictionary *)parameters needToken:(BOOL)isNeedToken
-               success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+- (void)refreshAuthenticatedUserInfo:(void (^)(GitHubUser *))success failure:(void (^)(NSError *))failure {
     
-    NSLog(@"POST => [%@]", apiURL);
-    AFHTTPRequestOperationManager *manager = [self makeOperationManagerNeedToken:YES];
-    [manager POST:apiURL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"POST SUCCESS => Response[%@]", responseObject);
-        success(operation, responseObject);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"POST Failure => STATUS CODE:%ld, Error: %@", (long)operation.response.statusCode, error);
-        NSError *errorInfo = [self errorFromRequestOperation:operation];
-        failure(operation, errorInfo);
-    }];
 }
 
-// 通过GET方法请求API
-- (void)getApiWithURL:(NSString *)apiURL parameters:(NSDictionary *)parameters needToken:(BOOL)isNeedToken
-              success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
-    NSLog(@"GET => [%@]", apiURL);
+# pragma mark - Private
+
+// 调用GitHub API
+- (AFHTTPRequestOperation *)callApiByMethod:(NSString *)method url:(NSString *)apiURL parameters:(NSDictionary *)parameters needToken:(BOOL)isNeedToken
+                success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    NSLog(@"%@ => %@", method, apiURL);
+    
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+//    [request setHTTPMethod:method];
+//    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+//    if (isNeedToken) {
+//        [request setValue:[NSString stringWithFormat:@"token %@", self.token] forHTTPHeaderField:@"Authorization"];
+//    }
+    NSError *serializationError = nil;
     AFHTTPRequestOperationManager *manager = [self makeOperationManagerNeedToken:YES];
-    [manager GET:apiURL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"POST SUCCESS => Response[%@]", responseObject);
+    NSMutableURLRequest *request = [manager.requestSerializer requestWithMethod:method URLString:apiURL parameters:parameters error:&serializationError];
+    void (^successBlock)(AFHTTPRequestOperation*, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@ SUCCESS => Response[%@]", method, responseObject);
         success(operation, responseObject);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"POST Failure => STATUS CODE:%ld, Error: %@", (long)operation.response.statusCode, error);
+    };
+    
+    void (^failureBlock)(AFHTTPRequestOperation*, id) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@ Failure => STATUS CODE:%ld, Error: %@", method, (long)operation.response.statusCode, error);
         NSError *errorInfo = [self errorFromRequestOperation:operation];
         failure(operation, errorInfo);
-    }];
+    };
+    
+    AFHTTPRequestOperation *operation = [manager HTTPRequestOperationWithRequest:request success:successBlock failure:failureBlock];
+    [manager.operationQueue addOperation:operation];
+    return operation;
 }
 
 - (AFHTTPRequestOperationManager *)makeOperationManagerNeedToken: (BOOL)isNeedToken {
