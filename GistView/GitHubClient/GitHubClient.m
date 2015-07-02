@@ -68,20 +68,20 @@
     CFRelease(uuid);
     
     NSCharacterSet *slashSet = [NSCharacterSet characterSetWithCharactersInString:@"/"];
-    NSString *baseURLString = [GithubBaseWebURL stringByTrimmingCharactersInSet:slashSet];
+    NSString *baseURLString = [GitHubBaseWebURL stringByTrimmingCharactersInSet:slashSet];
     
-    NSString *urlString = [[NSString alloc] initWithFormat: GithubApiAuthorize, baseURLString, GithubClientID, @"gist", uuidString];
+    NSString *urlString = [[NSString alloc] initWithFormat: GitHubApiAuthorize, baseURLString, GitHubClientID, @"gist", uuidString];
     NSURL *webUrl = [NSURL URLWithString:urlString];
     
     if(![self openURL:webUrl]) {
         // Error Handle
-        NSError *error = [NSError errorWithDomain:GithubClientErrorDomain
-                                             code:GithubClientErrorOpeningBrowserFailed
+        NSError *error = [NSError errorWithDomain:GitHubClientErrorDomain
+                                             code:GitHubClientErrorOpeningBrowserFailed
                                          userInfo:@{
-                                                    @"code" : @(GithubClientErrorOpeningBrowserFailed),
+                                                    @"code" : @(GitHubClientErrorOpeningBrowserFailed),
                                                     @"message" : @"无法打开浏览器，请确认你是否设置了默认的浏览器"
                                                     }];
-        [[NSNotificationCenter defaultCenter] postNotificationName:GithubAuthenticatedNotifiactionFailure object:error];
+        [[NSNotificationCenter defaultCenter] postNotificationName:GitHubAuthenticatedNotifiactionFailure object:error];
     }
 }
 
@@ -101,26 +101,26 @@
     }
     
     NSCharacterSet *slashSet = [NSCharacterSet characterSetWithCharactersInString:@"/"];
-    NSString *baseURLString = [GithubBaseWebURL stringByTrimmingCharactersInSet:slashSet];
-    NSString *urlString = [[NSString alloc] initWithFormat: GithubApiAccessToken, baseURLString];
+    NSString *baseURLString = [GitHubBaseWebURL stringByTrimmingCharactersInSet:slashSet];
+    NSString *urlString = [[NSString alloc] initWithFormat: GitHubApiAccessToken, baseURLString];
     
-    NSDictionary *parameters = @{@"client_id" : GithubClientID, @"client_secret" : GithubClientSecret, @"code1" : queryStringDictionary[@"code"]};
+    NSDictionary *parameters = @{@"client_id" : GitHubClientID, @"client_secret" : GitHubClientSecret, @"code" : queryStringDictionary[@"code"]};
 
     [self postApiWithURL:urlString parameters:parameters needToken:NO success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *jsonObject = (NSDictionary *)responseObject;
         // temporary code 过期
         if (jsonObject[@"error"] != nil) {
-            NSError *error = [NSError errorWithDomain:GithubClientErrorDomain
-                                                 code:GithubClientErrorAuthenticationFailed
+            NSError *error = [NSError errorWithDomain:GitHubClientErrorDomain
+                                                 code:GitHubClientErrorAuthenticationFailed
                                              userInfo:@{
-                                                        @"code" : @(GithubClientErrorAuthenticationFailed),
+                                                        @"code" : @(GitHubClientErrorAuthenticationFailed),
                                                         @"message" : jsonObject[@"error_description"]
                                                         }];
-            [[NSNotificationCenter defaultCenter] postNotificationName:GithubAuthenticatedNotifiactionFailure object:error];
+            [[NSNotificationCenter defaultCenter] postNotificationName:GitHubAuthenticatedNotifiactionFailure object:error];
         }
         self.token = jsonObject[@"access_token"];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:GithubAuthenticatedNotifiactionFailure object:error];
+        [[NSNotificationCenter defaultCenter] postNotificationName:GitHubAuthenticatedNotifiactionFailure object:error];
     }];
 }
 
@@ -185,20 +185,20 @@
 
     NSInteger HTTPCode = operation.response.statusCode;
     NSMutableDictionary *errorInfo = [NSMutableDictionary dictionary];
-    NSInteger errorCode = GithubClientErrorConnectionFailed;
+    NSInteger errorCode = GitHubClientErrorConnectionFailed;
     NSString *errorMessage = [self errorUserInfoFromRequestOperation:operation];
     switch (HTTPCode) {
         case 401:
-            errorCode = GithubClientErrorAuthenticationFailed;
+            errorCode = GitHubClientErrorAuthenticationFailed;
             break;
         case 400:
-            errorCode = GithubClientErrorBadRequest;
+            errorCode = GitHubClientErrorBadRequest;
             break;
         case 403:
-            errorCode = GithubClientErrorRequestForbidden;
+            errorCode = GitHubClientErrorRequestForbidden;
             break;
         case 422:
-            errorCode = GithubClientErrorServiceRequestFailed;
+            errorCode = GitHubClientErrorServiceRequestFailed;
             break;
         default:
             if ([operation.error.domain isEqual:NSURLErrorDomain]) {
@@ -210,7 +210,7 @@
                     case NSURLErrorServerCertificateNotYetValid:
                     case NSURLErrorClientCertificateRejected:
                     case NSURLErrorClientCertificateRequired:
-                        errorCode = GithubClientErrorSecureConnectionFailed;
+                        errorCode = GitHubClientErrorSecureConnectionFailed;
                         break;
                 }
             }
@@ -220,7 +220,7 @@
     errorInfo[@"code"] = @(errorCode);
     errorInfo[@"message"] = errorMessage;
     
-    return [[NSError alloc]initWithDomain:GithubClientErrorDomain code:errorCode userInfo:errorInfo];
+    return [[NSError alloc]initWithDomain:GitHubClientErrorDomain code:errorCode userInfo:errorInfo];
 }
 
 // 从response中获取错误信息

@@ -11,38 +11,38 @@
 
 #ifndef _GITHUBCLIENT_
 #define _GITHUBCLIENT_
-static NSString * const GithubAuthenticatedNotifiactionSuccess = @"GithubAuthenticatedNotifiactionSuccess";
-static NSString * const GithubAuthenticatedNotifiactionFailure = @"GithubAuthenticatedNotifiactionFailure";
+static NSString * const GitHubAuthenticatedNotifiactionSuccess = @"GitHubAuthenticatedNotifiactionSuccess";
+static NSString * const GitHubAuthenticatedNotifiactionFailure = @"GitHubAuthenticatedNotifiactionFailure";
 
 // Server Url
-static NSString * const GithubApiEndpointURL = @"https://api.github.com";
-static NSString * const GithubBaseWebURL = @"https://github.com";
+static NSString * const GitHubApiEndpointURL = @"https://api.github.com";
+static NSString * const GitHubBaseWebURL = @"https://github.com";
 
 // API URL PATH
-static NSString * const GithubApiAuthorize = @"%@/login/oauth/authorize?client_id=%@&scope=%@&state=%@";
-static NSString * const GithubApiAccessToken = @"%@/login/oauth/access_token";
-static NSString * const GithubApiAuthenticatedUser = @"%@/user";
+static NSString * const GitHubApiAuthorize = @"%@/login/oauth/authorize?client_id=%@&scope=%@&state=%@";
+static NSString * const GitHubApiAccessToken = @"%@/login/oauth/access_token";
+static NSString * const GitHubApiAuthenticatedUser = @"%@/user";
 
 // APP Setting
-static NSString * const GithubClientID = @"fafb0af1c792afc8aac6";
-static NSString * const GithubClientSecret = @"f30e7b2071b7dc763db53a38c0ad4528dadb013a";
+static NSString * const GitHubClientID = @"fafb0af1c792afc8aac6";
+static NSString * const GitHubClientSecret = @"f30e7b2071b7dc763db53a38c0ad4528dadb013a";
 
 // NSError Domain
-static NSString * const GithubClientErrorDomain = @"GithubClientErrorDomain";
+static NSString * const GitHubClientErrorDomain = @"GitHubClientErrorDomain";
 
 // NSError Code
-static NSInteger const GithubClientErrorAuthenticationFailed = 9001;
-static NSInteger const GithubClientErrorServiceRequestFailed = 9002;
-static NSInteger const GithubClientErrorConnectionFailed = 9003;
-static NSInteger const GithubClientErrorJSONParsingFailed = 9004;
-static NSInteger const GithubClientErrorBadRequest = 9005;
-static NSInteger const GithubClientErrorTwoFactorAuthenticationOneTimePasswordRequired = 9006;
-static NSInteger const GithubClientErrorUnsupportedServer = 9007;
-static NSInteger const GithubClientErrorOpeningBrowserFailed = 9008;
-static NSInteger const GithubClientErrorRequestForbidden = 9009;
-static NSInteger const GithubClientErrorTokenAuthenticationUnsupported = 9010;
-static NSInteger const GithubClientErrorUnsupportedServerScheme = 9011;
-static NSInteger const GithubClientErrorSecureConnectionFailed = 9012;
+static NSInteger const GitHubClientErrorAuthenticationFailed = 9001;
+static NSInteger const GitHubClientErrorServiceRequestFailed = 9002;
+static NSInteger const GitHubClientErrorConnectionFailed = 9003;
+static NSInteger const GitHubClientErrorJSONParsingFailed = 9004;
+static NSInteger const GitHubClientErrorBadRequest = 9005;
+static NSInteger const GitHubClientErrorTwoFactorAuthenticationOneTimePasswordRequired = 9006;
+static NSInteger const GitHubClientErrorUnsupportedServer = 9007;
+static NSInteger const GitHubClientErrorOpeningBrowserFailed = 9008;
+static NSInteger const GitHubClientErrorRequestForbidden = 9009;
+static NSInteger const GitHubClientErrorTokenAuthenticationUnsupported = 9010;
+static NSInteger const GitHubClientErrorUnsupportedServerScheme = 9011;
+static NSInteger const GitHubClientErrorSecureConnectionFailed = 9012;
 
 #endif
 
@@ -56,6 +56,8 @@ static NSInteger const GithubClientErrorSecureConnectionFailed = 9012;
 - (void)authorize;
 // 通过callback url中包含的code，获取token,完成登陆过程
 - (void)completeAuthorizeWithCallbackURL:(NSURL *)callbackURL;
+// 
+- (void)refreshAuthenticatedUserInfo:(void (^)(GitHubUser *user))success failure:(void (^)(NSError *error))failure;
 
 // 判断是否已取的GitHub认证
 @property (nonatomic, getter = isAuthenticated, readonly) BOOL authenticated;
