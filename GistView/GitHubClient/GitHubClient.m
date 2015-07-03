@@ -54,9 +54,9 @@
     }
     
     if (_authenticatedUser == nil) {
-        // TODO get authenticated user
+        AFHTTPRequestOperation *operation = [self syncAuthenticatedUserInfo:nil failure:nil];
+        [operation waitUntilFinished];
     }
-    
     return _authenticatedUser;
 }
 
@@ -68,7 +68,7 @@
     CFRelease(uuid);
     
     NSCharacterSet *slashSet = [NSCharacterSet characterSetWithCharactersInString:@"/"];
-    NSString *baseURLString = [GitHubBaseWebURL stringByTrimmingCharactersInSet:slashSet];
+    NSString *baseURLString = [GitHubURLBaseWeb stringByTrimmingCharactersInSet:slashSet];
     
     NSString *urlString = [[NSString alloc] initWithFormat: GitHubApiAuthorize, baseURLString, GitHubClientID, @"gist", uuidString];
     NSURL *webUrl = [NSURL URLWithString:urlString];
@@ -101,7 +101,7 @@
     }
     
     NSCharacterSet *slashSet = [NSCharacterSet characterSetWithCharactersInString:@"/"];
-    NSString *baseURLString = [GitHubBaseWebURL stringByTrimmingCharactersInSet:slashSet];
+    NSString *baseURLString = [GitHubURLBaseWeb stringByTrimmingCharactersInSet:slashSet];
     NSString *urlString = [[NSString alloc] initWithFormat: GitHubApiAccessToken, baseURLString];
     
     NSDictionary *parameters = @{@"client_id" : GitHubClientID, @"client_secret" : GitHubClientSecret, @"code" : queryStringDictionary[@"code"]};
@@ -119,13 +119,26 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:GitHubAuthenticatedNotifiactionFailure object:error];
         }
         self.token = jsonObject[@"access_token"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:GitHubAuthenticatedNotifiactionSuccess object:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [[NSNotificationCenter defaultCenter] postNotificationName:GitHubAuthenticatedNotifiactionFailure object:error];
     }];
 }
 
-- (void)refreshAuthenticatedUserInfo:(void (^)(GitHubUser *))success failure:(void (^)(NSError *))failure {
+- (AFHTTPRequestOperation *)syncAuthenticatedUserInfo:(void (^)(GitHubUser *))success failure:(void (^)(NSError *))failure {
+    NSString *urlString = [[NSString alloc] initWithFormat: GitHubApiAuthenticatedUser, GitHubURLApiEndpoint];
     
+    AFHTTPRequestOperation *operation = [self callApiByMethod:@"GET" url:urlString parameters:nil needToken:YES
+    success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        GitHubUser *user = [[GitHubUser alloc] initWithDictionary:responseObject];
+        _authenticatedUser = user;
+        success(user);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        _authenticatedUser = nil;
+        failure(error);
+    }];
+
+    return operation;
 }
 
 # pragma mark - Private
@@ -136,12 +149,6 @@
                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
     NSLog(@"%@ => %@", method, apiURL);
     
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-//    [request setHTTPMethod:method];
-//    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-//    if (isNeedToken) {
-//        [request setValue:[NSString stringWithFormat:@"token %@", self.token] forHTTPHeaderField:@"Authorization"];
-//    }
     NSError *serializationError = nil;
     AFHTTPRequestOperationManager *manager = [self makeOperationManagerNeedToken:YES];
     NSMutableURLRequest *request = [manager.requestSerializer requestWithMethod:method URLString:apiURL parameters:parameters error:&serializationError];

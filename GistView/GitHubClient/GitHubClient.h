@@ -15,8 +15,8 @@ static NSString * const GitHubAuthenticatedNotifiactionSuccess = @"GitHubAuthent
 static NSString * const GitHubAuthenticatedNotifiactionFailure = @"GitHubAuthenticatedNotifiactionFailure";
 
 // Server Url
-static NSString * const GitHubApiEndpointURL = @"https://api.github.com";
-static NSString * const GitHubBaseWebURL = @"https://github.com";
+static NSString * const GitHubURLApiEndpoint = @"https://api.github.com";
+static NSString * const GitHubURLBaseWeb = @"https://github.com";
 
 // API URL PATH
 static NSString * const GitHubApiAuthorize = @"%@/login/oauth/authorize?client_id=%@&scope=%@&state=%@";
@@ -56,8 +56,8 @@ static NSInteger const GitHubClientErrorSecureConnectionFailed = 9012;
 - (void)authorize;
 // 通过callback url中包含的code，获取token,完成登陆过程
 - (void)completeAuthorizeWithCallbackURL:(NSURL *)callbackURL;
-// 
-- (void)refreshAuthenticatedUserInfo:(void (^)(GitHubUser *user))success failure:(void (^)(NSError *error))failure;
+// 同步认证用户信息
+- (AFHTTPRequestOperation *)syncAuthenticatedUserInfo:(void (^)(GitHubUser *user))success failure:(void (^)(NSError *error))failure;
 
 // 判断是否已取的GitHub认证
 @property (nonatomic, getter = isAuthenticated, readonly) BOOL authenticated;

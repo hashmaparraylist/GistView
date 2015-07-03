@@ -50,7 +50,6 @@
     NSLog(@"*** GitHub callback url: %@", url);
     if ([url.host isEqual:@"oauth"]) {
         MBProgressHUD *_hud = [MBProgressHUD showHUDAddedTo:self.window.rootViewController.view animated:YES];
-//       	 _hud.mode = MBProgressHUDModeDeterminate;
         _hud.labelText = @"认证中...";
         [[GitHubClient sharedInstance] completeAuthorizeWithCallbackURL:url];
         return YES;
