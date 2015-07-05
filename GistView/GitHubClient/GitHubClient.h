@@ -22,6 +22,9 @@ static NSString * const GitHubURLBaseWeb = @"https://github.com";
 static NSString * const GitHubApiAuthorize = @"%@/login/oauth/authorize?client_id=%@&scope=%@&state=%@";
 static NSString * const GitHubApiAccessToken = @"%@/login/oauth/access_token";
 static NSString * const GitHubApiAuthenticatedUser = @"%@/user";
+static NSString * const GitHubApiListAuthenticatedUserAllGist = @"%@/gists";            // List the Authenticated user's gists
+static NSString * const GitHubApiListAuthenticatedUserPublicGist = @"%@/gists/Public";  // List the Authenticated user's public gists
+static NSString * const GitHubApiListAuthenticatedUserStarredGist = @"%@/gists/Public"; // List the Authenticated user's starred gists
 
 // APP Setting
 static NSString * const GitHubClientID = @"fafb0af1c792afc8aac6";
@@ -58,6 +61,8 @@ static NSInteger const GitHubClientErrorSecureConnectionFailed = 9012;
 - (void)completeAuthorizeWithCallbackURL:(NSURL *)callbackURL;
 // 同步认证用户信息
 - (AFHTTPRequestOperation *)syncAuthenticatedUserInfo:(void (^)(GitHubUser *user))success failure:(void (^)(NSError *error))failure;
+// 获取认证用户的全部Gists
+- (AFHTTPRequestOperation *)listAuthenticatedUserAllGist:(void (^)(NSArray *gists))success failure:(void(^)(NSError *error))failure;
 
 // 判断是否已取的GitHub认证
 @property (nonatomic, getter = isAuthenticated, readonly) BOOL authenticated;

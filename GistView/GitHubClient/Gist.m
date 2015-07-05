@@ -28,9 +28,13 @@
     self.forksUrl = rawData[@"forks_url"];
     self.commitsUrl = rawData[@"commits_url"];
     self.gistDescription = rawData[@"description"];
-    self.owner = [[GitHubUser alloc] initWithDictionary:rawData[@"owner"]];
+    if (rawData[@"owner"] != [NSNull null]) {
+        self.owner = [[GitHubUser alloc] initWithDictionary:rawData[@"owner"]];
+    }
     self.isPublic = rawData[@"public"];
-    self.user = [[GitHubUser alloc] initWithDictionary:rawData[@"user"]];
+    if (rawData[@"user"] != [NSNull null]) {
+        self.user = [[GitHubUser alloc] initWithDictionary:rawData[@"user"]];
+    }
     self.file = rawData[@"file"];
     NSNumber *comments = rawData[@"comments"];
     self.comments = [comments integerValue];

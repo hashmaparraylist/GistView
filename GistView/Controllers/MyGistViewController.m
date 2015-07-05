@@ -39,6 +39,7 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
     
     if ([self.gists count] == 0) {
         _isLoading = true;
+        [self searchMyGists];
     }
 }
 
@@ -112,7 +113,16 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
 #pragma mark - Private
 
 -(void) searchMyGists {
-    
+    GitHubClient *sharedClient = [GitHubClient sharedInstance];
+    [sharedClient listAuthenticatedUserAllGist:^(NSArray *gists) {
+        _isLoading = false;
+        self.gists = [NSMutableArray arrayWithArray:gists];
+        [self.tableView reloadData];
+    } failure:^(NSError *error) {
+        _isLoading =false;
+        self.gists = [[NSMutableArray alloc] initWithCapacity:10];
+        [self.tableView reloadData];
+    }];
 }
 
 @end

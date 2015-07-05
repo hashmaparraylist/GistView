@@ -9,6 +9,7 @@
 #import <AFNetworking/AFNetworking.h>
 #import "GitHubClient.h"
 #import "GitHubUser.h"
+#import "Gist.h"
 
 @interface GitHubClient ()
 @property (nonatomic, strong, readwrite) NSString *token;
@@ -141,7 +142,29 @@
     return operation;
 }
 
+- (AFHTTPRequestOperation *)listAuthenticatedUserAllGist:(void (^)(NSArray *))success failure:(void (^)(NSError *))failure {
+    NSString *apiUrl = [NSString stringWithFormat:GitHubApiListAuthenticatedUserAllGist, GitHubURLApiEndpoint];
+    AFHTTPRequestOperation *operation = [self getGistsWithURL:apiUrl needToken:YES success:success failure:failure];
+    return operation;
+}
+
 # pragma mark - Private
+
+// 通过URL获取Gists
+- (AFHTTPRequestOperation *)getGistsWithURL:(NSString *)url needToken:(BOOL)isNeedToken success:(void (^)(NSArray *))success failure:(void (^)(NSError *))failure {
+    AFHTTPRequestOperation * operation = [self callApiByMethod:@"GET" url:url parameters:nil needToken:YES success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSMutableArray *gists = [[NSMutableArray alloc] initWithCapacity:10];
+        for (NSDictionary *rawData in responseObject) {
+            Gist *gist = [[Gist alloc] initWithDictionary:rawData];
+            [gists addObject:gist];
+        }
+        success(gists);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+    
+    return operation;
+}
 
 // 调用GitHub API
 - (AFHTTPRequestOperation *)callApiByMethod:(NSString *)method url:(NSString *)apiURL parameters:(NSDictionary *)parameters needToken:(BOOL)isNeedToken
