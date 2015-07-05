@@ -6,12 +6,15 @@
 //  Copyright (c) 2015年 Sebastian Qu. All rights reserved.
 //
 
+#import "Gist.h"
 #import "GitHubClient.h"
 #import "GitHubUser.h"
+#import "GistCell.h"
 #import "MyGistViewController.h"
 
 static NSString * const NothingFouncdCellIdentifier = @"NothingFoundCell";
 static NSString * const LoadingCellIdentifier = @"LoadingCell";
+static NSString * const GistCellIdentifier = @"GistCell";
 
 @interface MyGistViewController ()
 
@@ -36,6 +39,7 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
     // 注册TableViewCell
     [self.tableView registerNib:[UINib nibWithNibName:LoadingCellIdentifier bundle:nil] forCellReuseIdentifier:LoadingCellIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:NothingFouncdCellIdentifier bundle:nil] forCellReuseIdentifier:NothingFouncdCellIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:GistCellIdentifier bundle:nil] forCellReuseIdentifier:GistCellIdentifier];
     
     if ([self.gists count] == 0) {
         _isLoading = true;
@@ -49,11 +53,6 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
 }
 
 #pragma mark - UITableViewDataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
-    return 0;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if ([self.gists count] == 0) {
@@ -70,9 +69,16 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
         [spinner startAnimating];
         return cell;
     } else {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NothingFouncdCellIdentifier forIndexPath:indexPath];
-        return cell;
+        if ([self.gists count] == 0) {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NothingFouncdCellIdentifier forIndexPath:indexPath];
+            return cell;
+        }
     }
+    
+    GistCell *cell = [tableView dequeueReusableCellWithIdentifier:GistCellIdentifier forIndexPath:indexPath];
+    Gist *gist = self.gists[indexPath.row];
+    [cell configureForGist:gist];
+    return cell;
 }
 
 
@@ -123,6 +129,7 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
         self.gists = [[NSMutableArray alloc] initWithCapacity:10];
         [self.tableView reloadData];
     }];
+    [self.tableView reloadData];
 }
 
 @end

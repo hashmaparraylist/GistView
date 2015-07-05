@@ -31,7 +31,11 @@
 #pragma mark - Public
 
 - (void)configureForGist:(Gist *)gist {
-    self.descriptionLabel.text = gist.gistDescription;
+    if ([gist.gistDescription isEqualToString:@""]) {
+        self.descriptionLabel.text = @"(无题)";
+    } else {
+        self.descriptionLabel.text = gist.gistDescription;
+    }
     self.createAtLabel.text = gist.createdAt;
     
     [self.ownerAvatar setImageWithURL:[NSURL URLWithString:gist.owner.avatarUrl] placeholderImage:[UIImage imageNamed:@"Placeholder"]];

@@ -42,7 +42,7 @@
     self.htmlUrl = rawData[@"html_url"];
     self.gitPullUrl = rawData[@"git_pull_url"];
     self.gitPushUrl = rawData[@"git_push_url"];
-    self.createdAt = rawData[@"create_at"];
+    self.createdAt = rawData[@"created_at"];
     self.updatedAt = rawData[@"upated_at"];
     self.forks = rawData[@"forks"];
     self.history = rawData[@"history"];
