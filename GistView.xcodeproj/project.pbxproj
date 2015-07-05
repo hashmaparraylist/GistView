@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		821D8C441B4438DC009EADB4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 821D8C431B4438DC009EADB4 /* CoreGraphics.framework */; };
+		821D8C471B47BC53009EADB4 /* Gist.m in Sources */ = {isa = PBXBuildFile; fileRef = 821D8C461B47BC53009EADB4 /* Gist.m */; };
 		822E85CB1B4675F200D8F9BE /* MyGistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 822E85CA1B4675F200D8F9BE /* MyGistViewController.m */; };
 		823725CB1B3F1AFF0054AEAE /* GitHubClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 823725CA1B3F1AFF0054AEAE /* GitHubClient.m */; };
 		825E57A31B417AD200C84050 /* LoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 825E57A21B417AD200C84050 /* LoadingViewController.m */; };
@@ -36,6 +37,8 @@
 		7529C3B2C03AF6EE879C6125 /* Pods_GistView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GistView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		77F28DD0C07AE92DD3EB8D3D /* Pods-GistView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GistView.release.xcconfig"; path = "Pods/Target Support Files/Pods-GistView/Pods-GistView.release.xcconfig"; sourceTree = "<group>"; };
 		821D8C431B4438DC009EADB4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		821D8C451B47BC53009EADB4 /* Gist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Gist.h; sourceTree = "<group>"; };
+		821D8C461B47BC53009EADB4 /* Gist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Gist.m; sourceTree = "<group>"; };
 		822E85C91B4675F200D8F9BE /* MyGistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyGistViewController.h; sourceTree = "<group>"; };
 		822E85CA1B4675F200D8F9BE /* MyGistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyGistViewController.m; sourceTree = "<group>"; };
 		823725C91B3F1AFF0054AEAE /* GitHubClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GitHubClient.h; sourceTree = "<group>"; };
@@ -84,6 +87,8 @@
 				823725CA1B3F1AFF0054AEAE /* GitHubClient.m */,
 				825E57A41B4183C900C84050 /* GitHubUser.h */,
 				825E57A51B4183C900C84050 /* GitHubUser.m */,
+				821D8C451B47BC53009EADB4 /* Gist.h */,
+				821D8C461B47BC53009EADB4 /* Gist.m */,
 			);
 			path = GitHubClient;
 			sourceTree = "<group>";
@@ -334,6 +339,7 @@
 				82994E101B3DB9BF00B6FDE8 /* main.m in Sources */,
 				823725CB1B3F1AFF0054AEAE /* GitHubClient.m in Sources */,
 				825E57A31B417AD200C84050 /* LoadingViewController.m in Sources */,
+				821D8C471B47BC53009EADB4 /* Gist.m in Sources */,
 				822E85CB1B4675F200D8F9BE /* MyGistViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
