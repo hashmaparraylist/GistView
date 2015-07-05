@@ -10,6 +10,8 @@
 #import "GitHubUser.h"
 #import "MyGistViewController.h"
 
+static NSString * const NothingFouncdCellIdentifier = @"NothingFoundCell";
+static NSString * const LoadingCellIdentifier = @"LoadingCell";
 
 @interface MyGistViewController ()
 
@@ -17,7 +19,9 @@
 @property (nonatomic, strong) NSMutableArray *gists;
 @end
 
-@implementation MyGistViewController
+@implementation MyGistViewController {
+    BOOL _isLoading;
+}
 
 #pragma mark - Lifecycle
 
@@ -26,6 +30,16 @@
     self.gists = [[NSMutableArray alloc] initWithCapacity:10];
     self.authenticatedUser = [GitHubClient sharedInstance].authenticatedUser;
     self.navigationItem.title = [NSString stringWithFormat:@"%@的Gist", self.authenticatedUser.name];
+    
+    self.tableView.rowHeight = 65;
+    
+    // 注册TableViewCell
+    [self.tableView registerNib:[UINib nibWithNibName:LoadingCellIdentifier bundle:nil] forCellReuseIdentifier:LoadingCellIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:NothingFouncdCellIdentifier bundle:nil] forCellReuseIdentifier:NothingFouncdCellIdentifier];
+    
+    if ([self.gists count] == 0) {
+        _isLoading = true;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,21 +55,25 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // Return the number of rows in the section.
-    return 1;
+    if ([self.gists count] == 0) {
+        return 1;
+    } else {
+        return [self.gists count];
+    }
 }
 
-#pragma mark - UITableViewDelegate
-
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
+    if (_isLoading) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:LoadingCellIdentifier forIndexPath:indexPath];
+        UIActivityIndicatorView *spinner = (UIActivityIndicatorView *)[cell viewWithTag:100];
+        [spinner startAnimating];
+        return cell;
+    } else {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NothingFouncdCellIdentifier forIndexPath:indexPath];
+        return cell;
+    }
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -91,14 +109,10 @@
 }
 */
 
-/*
-#pragma mark - Navigation
+#pragma mark - Private
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void) searchMyGists {
+    
 }
-*/
 
 @end
