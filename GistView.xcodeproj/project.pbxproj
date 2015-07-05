@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		821D8C441B4438DC009EADB4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 821D8C431B4438DC009EADB4 /* CoreGraphics.framework */; };
 		821D8C471B47BC53009EADB4 /* Gist.m in Sources */ = {isa = PBXBuildFile; fileRef = 821D8C461B47BC53009EADB4 /* Gist.m */; };
+		821D8C511B491FB5009EADB4 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 821D8C4F1B491FB5009EADB4 /* LoadingCell.xib */; };
+		821D8C561B49287C009EADB4 /* NotFound.xib in Resources */ = {isa = PBXBuildFile; fileRef = 821D8C541B49287C009EADB4 /* NotFound.xib */; };
 		822E85CB1B4675F200D8F9BE /* MyGistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 822E85CA1B4675F200D8F9BE /* MyGistViewController.m */; };
 		823725CB1B3F1AFF0054AEAE /* GitHubClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 823725CA1B3F1AFF0054AEAE /* GitHubClient.m */; };
 		825E57A31B417AD200C84050 /* LoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 825E57A21B417AD200C84050 /* LoadingViewController.m */; };
@@ -39,6 +41,8 @@
 		821D8C431B4438DC009EADB4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		821D8C451B47BC53009EADB4 /* Gist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Gist.h; sourceTree = "<group>"; };
 		821D8C461B47BC53009EADB4 /* Gist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Gist.m; sourceTree = "<group>"; };
+		821D8C4F1B491FB5009EADB4 /* LoadingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
+		821D8C541B49287C009EADB4 /* NotFound.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotFound.xib; sourceTree = "<group>"; };
 		822E85C91B4675F200D8F9BE /* MyGistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyGistViewController.h; sourceTree = "<group>"; };
 		822E85CA1B4675F200D8F9BE /* MyGistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyGistViewController.m; sourceTree = "<group>"; };
 		823725C91B3F1AFF0054AEAE /* GitHubClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GitHubClient.h; sourceTree = "<group>"; };
@@ -100,6 +104,8 @@
 				825E57A21B417AD200C84050 /* LoadingViewController.m */,
 				822E85C91B4675F200D8F9BE /* MyGistViewController.h */,
 				822E85CA1B4675F200D8F9BE /* MyGistViewController.m */,
+				821D8C4F1B491FB5009EADB4 /* LoadingCell.xib */,
+				821D8C541B49287C009EADB4 /* NotFound.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -266,8 +272,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				821D8C561B49287C009EADB4 /* NotFound.xib in Resources */,
 				82994E191B3DB9BF00B6FDE8 /* Main.storyboard in Resources */,
 				82994E1E1B3DB9BF00B6FDE8 /* LaunchScreen.xib in Resources */,
+				821D8C511B491FB5009EADB4 /* LoadingCell.xib in Resources */,
 				82994E1B1B3DB9BF00B6FDE8 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
