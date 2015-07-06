@@ -46,13 +46,10 @@
 - (void)authorizedSuccess:(NSNotification *) notification {
     // 获取认证用户的用户信息
     [MBProgressHUD hideHUDForView:self.view animated:YES];
-    MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.view];
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText = @"获取认证用户信息";
-    [hud show:YES];
     [_sharedClient syncAuthenticatedUserInfo:^(GitHubUser *user) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = [NSString stringWithFormat:@"欢迎, %@", user.name];
         UIStoryboard *main = self.storyboard;
         UIViewController *mainViewController = [main instantiateViewControllerWithIdentifier:@"main"];
         [self presentViewController:mainViewController animated:NO completion:^{
