@@ -11,6 +11,7 @@
 #import "GitHubUser.h"
 #import "GistCell.h"
 #import "MyGistViewController.h"
+#import <MJRefresh/MJRefresh.h>
 
 static NSString * const NothingFouncdCellIdentifier = @"NothingFoundCell";
 static NSString * const LoadingCellIdentifier = @"LoadingCell";
@@ -36,8 +37,7 @@ static NSString * const GistCellIdentifier = @"GistCell";
     [super viewDidLoad];
     
     self.allGists = [[NSMutableArray alloc] initWithCapacity:10];
-    self.authenticatedUser = [GitHubClient sharedInstance].authenticatedUser;
-    self.navigationItem.title = [NSString stringWithFormat:@"%@的Gist", self.authenticatedUser.name];
+    self.starredGists = [[NSMutableArray alloc] initWithCapacity:10];
     
     self.tableView.rowHeight = 65;
     
@@ -46,10 +46,21 @@ static NSString * const GistCellIdentifier = @"GistCell";
     [self.tableView registerNib:[UINib nibWithNibName:NothingFouncdCellIdentifier bundle:nil] forCellReuseIdentifier:NothingFouncdCellIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:GistCellIdentifier bundle:nil] forCellReuseIdentifier:GistCellIdentifier];
     
-    if ([self.allGists count] == 0) {
-        _isLoading = true;
-        [self searchMyGists];
-    }
+    __weak typeof(self) weakSelf = self;
+    __weak UITableView *tableView = self.tableView;
+    __weak UISegmentedControl *segment = self.segement;
+    tableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if (segment.selectedSegmentIndex == 0) {
+                [weakSelf searchAllGists:tableView];
+            } else {
+                [weakSelf searchStarredGists:tableView];
+            }
+            [tableView.header endRefreshing];
+        });
+    }];
+    
+    [tableView.header beginRefreshing];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -61,50 +72,66 @@ static NSString * const GistCellIdentifier = @"GistCell";
 
 // UISegmentedController 选择Segment变更时
 - (IBAction)segmentValueChanged:(UISegmentedControl *)sender {
+    [self.tableView reloadData];
+    if ([[self targetArray] count] == 0) {
+        [self.tableView.header beginRefreshing];
+    }
 }
-
 
 #pragma mark - Private
 
--(void) searchMyGists {
+- (void)searchAllGists:(UITableView *)tableView {
     GitHubClient *sharedClient = [GitHubClient sharedInstance];
     [sharedClient listAuthenticatedUserAllGist:^(NSArray *gists) {
-        _isLoading = false;
         self.allGists = [NSMutableArray arrayWithArray:gists];
-        [self.tableView reloadData];
+        [tableView reloadData];
     } failure:^(NSError *error) {
-        _isLoading =false;
         self.allGists = [[NSMutableArray alloc] initWithCapacity:10];
-        [self.tableView reloadData];
+        [tableView reloadData];
     }];
-    [self.tableView reloadData];
+}
+
+- (void)searchStarredGists:(UITableView *)tableView {
+    GitHubClient *sharedClient = [GitHubClient sharedInstance];
+    [sharedClient listAuthenticatedUserStarredGist:^(NSArray * gists) {
+        self.starredGists = [NSMutableArray arrayWithArray:gists];
+        [tableView reloadData];
+    } failure:^(NSError *error) {
+        self.starredGists = [[NSMutableArray alloc] initWithCapacity:10];
+        [tableView reloadData];
+    }];
+}
+
+- (NSMutableArray *)targetArray {
+    if (self.segement.selectedSegmentIndex == 0) {
+        return self.allGists;
+    }
+    return self.starredGists;
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if ([self.allGists count] == 0) {
+    if ([[self targetArray] count] == 0) {
         return 1;
-    } else {
-        return [self.allGists count];
     }
+    return [[self targetArray] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (_isLoading) {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:LoadingCellIdentifier forIndexPath:indexPath];
-        UIActivityIndicatorView *spinner = (UIActivityIndicatorView *)[cell viewWithTag:100];
-        [spinner startAnimating];
-        return cell;
-    } else {
-        if ([self.allGists count] == 0) {
+    if (![self.tableView.header isRefreshing]) {
+        if ([[self targetArray] count] == 0) {
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NothingFouncdCellIdentifier forIndexPath:indexPath];
             return cell;
         }
+    } else {
+        if ([[self targetArray] count] == 0) {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:LoadingCellIdentifier forIndexPath:indexPath];
+            return cell;
+        }
     }
-    
     GistCell *cell = [tableView dequeueReusableCellWithIdentifier:GistCellIdentifier forIndexPath:indexPath];
-    Gist *gist = self.allGists[indexPath.row];
+    Gist *gist = [self targetArray][indexPath.row];
     [cell configureForGist:gist];
     return cell;
 }
