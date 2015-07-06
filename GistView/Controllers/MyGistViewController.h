@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MyGistViewController : UITableViewController
+@interface MyGistViewController : UIViewController
 
 @end

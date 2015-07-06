@@ -31,7 +31,7 @@
 #pragma mark - Public
 
 - (void)configureForGist:(Gist *)gist {
-    if ([gist.gistDescription isEqualToString:@""]) {
+    if (gist.gistDescription == (NSString*) [NSNull null] || gist.gistDescription.length == 0) {
         self.descriptionLabel.text = @"(无题)";
     } else {
         self.descriptionLabel.text = gist.gistDescription;

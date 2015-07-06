@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="u5Q-oe-Tyc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="u5Q-oe-Tyc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -22,25 +22,6 @@
             </objects>
             <point key="canvasLocation" x="71" y="321"/>
         </scene>
-        <!--Root View Controller-->
-        <scene sceneID="ax9-eL-bhs">
-            <objects>
-                <tableViewController id="csa-cR-ive" customClass="MyGistViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Tpi-bq-kbg">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <connections>
-                            <outlet property="dataSource" destination="csa-cR-ive" id="mQc-0j-qdR"/>
-                            <outlet property="delegate" destination="csa-cR-ive" id="AFW-NL-4L1"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="D4y-Ib-dwf"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aqZ-Yj-lAy" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2209" y="-47"/>
-        </scene>
         <!--我的Gist-->
         <scene sceneID="uF5-qA-58M">
             <objects>
@@ -51,12 +32,61 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="csa-cR-ive" kind="relationship" relationship="rootViewController" id="Ihl-Wh-bW5"/>
+                        <segue destination="gzP-5p-gvs" kind="relationship" relationship="rootViewController" id="zsP-oR-KqF"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RBS-vg-IUr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1542" y="-47"/>
+        </scene>
+        <!--My Gist View Controller-->
+        <scene sceneID="WHm-wL-l6x">
+            <objects>
+                <viewController id="gzP-5p-gvs" customClass="MyGistViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="S9h-U5-21Q"/>
+                        <viewControllerLayoutGuide type="bottom" id="0Oe-aV-QgY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dlH-XZ-F4I">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="TU6-WR-p1e">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="gzP-5p-gvs" id="7zd-g5-U4a"/>
+                                    <outlet property="delegate" destination="gzP-5p-gvs" id="dsa-CO-pDM"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="TU6-WR-p1e" firstAttribute="leading" secondItem="dlH-XZ-F4I" secondAttribute="leading" id="57H-Vg-esM"/>
+                            <constraint firstItem="TU6-WR-p1e" firstAttribute="top" secondItem="dlH-XZ-F4I" secondAttribute="top" id="aTw-6j-fvG"/>
+                            <constraint firstItem="0Oe-aV-QgY" firstAttribute="top" secondItem="TU6-WR-p1e" secondAttribute="bottom" id="pIw-YM-0o0"/>
+                            <constraint firstAttribute="trailing" secondItem="TU6-WR-p1e" secondAttribute="trailing" id="w47-Js-he3"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="mRC-Ow-Sv7">
+                        <nil key="title"/>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="ACJ-Lg-q71">
+                            <rect key="frame" x="180" y="7" width="240" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="First"/>
+                                <segment title="Second"/>
+                            </segments>
+                        </segmentedControl>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="segement" destination="ACJ-Lg-q71" id="hDW-tK-MbY"/>
+                        <outlet property="tableView" destination="TU6-WR-p1e" id="YMC-Au-brQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="M82-Pe-sPF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2239" y="-47"/>
         </scene>
         <!--Item2-->
         <scene sceneID="cUV-IL-qBr">

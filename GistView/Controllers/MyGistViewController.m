@@ -17,6 +17,8 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
 static NSString * const GistCellIdentifier = @"GistCell";
 
 @interface MyGistViewController ()
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segement;
 
 @property (nonatomic, strong) GitHubUser *authenticatedUser;
 @property (nonatomic, strong) NSMutableArray *gists;
@@ -30,6 +32,7 @@ static NSString * const GistCellIdentifier = @"GistCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.gists = [[NSMutableArray alloc] initWithCapacity:10];
     self.authenticatedUser = [GitHubClient sharedInstance].authenticatedUser;
     self.navigationItem.title = [NSString stringWithFormat:@"%@的Gist", self.authenticatedUser.name];
@@ -50,6 +53,29 @@ static NSString * const GistCellIdentifier = @"GistCell";
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - IBAction
+
+// UISegmentedController Action
+- (void)segmentedControlHasChangedValue:(UISegmentedControl *)sender {
+    
+}
+
+#pragma mark - Private
+
+-(void) searchMyGists {
+    GitHubClient *sharedClient = [GitHubClient sharedInstance];
+    [sharedClient listAuthenticatedUserAllGist:^(NSArray *gists) {
+        _isLoading = false;
+        self.gists = [NSMutableArray arrayWithArray:gists];
+        [self.tableView reloadData];
+    } failure:^(NSError *error) {
+        _isLoading =false;
+        self.gists = [[NSMutableArray alloc] initWithCapacity:10];
+        [self.tableView reloadData];
+    }];
+    [self.tableView reloadData];
 }
 
 #pragma mark - UITableViewDataSource
@@ -79,57 +105,6 @@ static NSString * const GistCellIdentifier = @"GistCell";
     Gist *gist = self.gists[indexPath.row];
     [cell configureForGist:gist];
     return cell;
-}
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-#pragma mark - Private
-
--(void) searchMyGists {
-    GitHubClient *sharedClient = [GitHubClient sharedInstance];
-    [sharedClient listAuthenticatedUserAllGist:^(NSArray *gists) {
-        _isLoading = false;
-        self.gists = [NSMutableArray arrayWithArray:gists];
-        [self.tableView reloadData];
-    } failure:^(NSError *error) {
-        _isLoading =false;
-        self.gists = [[NSMutableArray alloc] initWithCapacity:10];
-        [self.tableView reloadData];
-    }];
-    [self.tableView reloadData];
 }
 
 @end
