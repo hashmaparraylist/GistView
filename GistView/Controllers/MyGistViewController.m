@@ -17,11 +17,13 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
 static NSString * const GistCellIdentifier = @"GistCell";
 
 @interface MyGistViewController ()
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segement;
 
 @property (nonatomic, strong) GitHubUser *authenticatedUser;
-@property (nonatomic, strong) NSMutableArray *gists;
+@property (nonatomic, strong) NSMutableArray *allGists;
+@property (nonatomic, strong) NSMutableArray *starredGists;
 @end
 
 @implementation MyGistViewController {
@@ -33,7 +35,7 @@ static NSString * const GistCellIdentifier = @"GistCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.gists = [[NSMutableArray alloc] initWithCapacity:10];
+    self.allGists = [[NSMutableArray alloc] initWithCapacity:10];
     self.authenticatedUser = [GitHubClient sharedInstance].authenticatedUser;
     self.navigationItem.title = [NSString stringWithFormat:@"%@的Gist", self.authenticatedUser.name];
     
@@ -44,7 +46,7 @@ static NSString * const GistCellIdentifier = @"GistCell";
     [self.tableView registerNib:[UINib nibWithNibName:NothingFouncdCellIdentifier bundle:nil] forCellReuseIdentifier:NothingFouncdCellIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:GistCellIdentifier bundle:nil] forCellReuseIdentifier:GistCellIdentifier];
     
-    if ([self.gists count] == 0) {
+    if ([self.allGists count] == 0) {
         _isLoading = true;
         [self searchMyGists];
     }
@@ -57,10 +59,10 @@ static NSString * const GistCellIdentifier = @"GistCell";
 
 #pragma mark - IBAction
 
-// UISegmentedController Action
-- (void)segmentedControlHasChangedValue:(UISegmentedControl *)sender {
-    
+// UISegmentedController 选择Segment变更时
+- (IBAction)segmentValueChanged:(UISegmentedControl *)sender {
 }
+
 
 #pragma mark - Private
 
@@ -68,11 +70,11 @@ static NSString * const GistCellIdentifier = @"GistCell";
     GitHubClient *sharedClient = [GitHubClient sharedInstance];
     [sharedClient listAuthenticatedUserAllGist:^(NSArray *gists) {
         _isLoading = false;
-        self.gists = [NSMutableArray arrayWithArray:gists];
+        self.allGists = [NSMutableArray arrayWithArray:gists];
         [self.tableView reloadData];
     } failure:^(NSError *error) {
         _isLoading =false;
-        self.gists = [[NSMutableArray alloc] initWithCapacity:10];
+        self.allGists = [[NSMutableArray alloc] initWithCapacity:10];
         [self.tableView reloadData];
     }];
     [self.tableView reloadData];
@@ -81,10 +83,10 @@ static NSString * const GistCellIdentifier = @"GistCell";
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if ([self.gists count] == 0) {
+    if ([self.allGists count] == 0) {
         return 1;
     } else {
-        return [self.gists count];
+        return [self.allGists count];
     }
 }
 
@@ -95,14 +97,14 @@ static NSString * const GistCellIdentifier = @"GistCell";
         [spinner startAnimating];
         return cell;
     } else {
-        if ([self.gists count] == 0) {
+        if ([self.allGists count] == 0) {
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NothingFouncdCellIdentifier forIndexPath:indexPath];
             return cell;
         }
     }
     
     GistCell *cell = [tableView dequeueReusableCellWithIdentifier:GistCellIdentifier forIndexPath:indexPath];
-    Gist *gist = self.gists[indexPath.row];
+    Gist *gist = self.allGists[indexPath.row];
     [cell configureForGist:gist];
     return cell;
 }

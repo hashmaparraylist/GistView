@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "90F502E5BB74EFF69F5FCB7E"
+               BlueprintIdentifier = "BB07046DCA81D9E529AA9ECA"
                BuildableName = "AFNetworking.framework"
                BlueprintName = "Pods-GistView-AFNetworking"
                ReferencedContainer = "container:Pods.xcodeproj">

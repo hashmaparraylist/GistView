@@ -74,9 +74,12 @@
                             <rect key="frame" x="180" y="7" width="240" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
-                                <segment title="First"/>
-                                <segment title="Second"/>
+                                <segment title="All"/>
+                                <segment title="Starred"/>
                             </segments>
+                            <connections>
+                                <action selector="segmentValueChanged:" destination="gzP-5p-gvs" eventType="valueChanged" id="ATY-Ue-YR0"/>
+                            </connections>
                         </segmentedControl>
                     </navigationItem>
                     <connections>

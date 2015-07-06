@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-GistView-MJRefresh.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-GistView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1F668D50F4C507B06009A0EC</key>
+		<key>A0C36A581F01E125526E446E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6662DFA8C43D187104E3C51C</key>
+		<key>BB07046DCA81D9E529AA9ECA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>90F502E5BB74EFF69F5FCB7E</key>
+		<key>D21380F6E68CAB4BAFFEF94A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F09ED5F0739504F36A8AA99D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
