@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		82192AAF1B4C226E00428545 /* GistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82192AAE1B4C226D00428545 /* GistViewController.m */; };
 		821D8C441B4438DC009EADB4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 821D8C431B4438DC009EADB4 /* CoreGraphics.framework */; };
 		821D8C471B47BC53009EADB4 /* Gist.m in Sources */ = {isa = PBXBuildFile; fileRef = 821D8C461B47BC53009EADB4 /* Gist.m */; };
 		821D8C511B491FB5009EADB4 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 821D8C4F1B491FB5009EADB4 /* LoadingCell.xib */; };
@@ -40,6 +41,8 @@
 		32330F415D31AA57AF1A8AC4 /* Pods-GistView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GistView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GistView/Pods-GistView.debug.xcconfig"; sourceTree = "<group>"; };
 		7529C3B2C03AF6EE879C6125 /* Pods_GistView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GistView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		77F28DD0C07AE92DD3EB8D3D /* Pods-GistView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GistView.release.xcconfig"; path = "Pods/Target Support Files/Pods-GistView/Pods-GistView.release.xcconfig"; sourceTree = "<group>"; };
+		82192AAD1B4C226D00428545 /* GistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GistViewController.h; sourceTree = "<group>"; };
+		82192AAE1B4C226D00428545 /* GistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GistViewController.m; sourceTree = "<group>"; };
 		821D8C431B4438DC009EADB4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		821D8C451B47BC53009EADB4 /* Gist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Gist.h; sourceTree = "<group>"; };
 		821D8C461B47BC53009EADB4 /* Gist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Gist.m; sourceTree = "<group>"; };
@@ -114,6 +117,8 @@
 				8288961E1B495A5200756967 /* GistCell.h */,
 				8288961F1B495A5200756967 /* GistCell.m */,
 				828896201B495A5200756967 /* GistCell.xib */,
+				82192AAD1B4C226D00428545 /* GistViewController.h */,
+				82192AAE1B4C226D00428545 /* GistViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -357,6 +362,7 @@
 				823725CB1B3F1AFF0054AEAE /* GitHubClient.m in Sources */,
 				828896211B495A5200756967 /* GistCell.m in Sources */,
 				825E57A31B417AD200C84050 /* LoadingViewController.m in Sources */,
+				82192AAF1B4C226E00428545 /* GistViewController.m in Sources */,
 				821D8C471B47BC53009EADB4 /* Gist.m in Sources */,
 				822E85CB1B4675F200D8F9BE /* MyGistViewController.m in Sources */,
 			);

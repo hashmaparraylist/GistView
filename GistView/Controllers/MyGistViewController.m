@@ -17,7 +17,7 @@ static NSString * const NothingFouncdCellIdentifier = @"NothingFoundCell";
 static NSString * const LoadingCellIdentifier = @"LoadingCell";
 static NSString * const GistCellIdentifier = @"GistCell";
 
-@interface MyGistViewController ()
+@interface MyGistViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segement;
@@ -134,6 +134,12 @@ static NSString * const GistCellIdentifier = @"GistCell";
     Gist *gist = [self targetArray][indexPath.row];
     [cell configureForGist:gist];
     return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
 }
 
 @end
