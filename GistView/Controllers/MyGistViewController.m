@@ -10,6 +10,7 @@
 #import "GitHubClient.h"
 #import "GitHubUser.h"
 #import "GistCell.h"
+#import "GistViewController.h"
 #import "MyGistViewController.h"
 #import <MJRefresh/MJRefresh.h>
 
@@ -109,6 +110,18 @@ static NSString * const GistCellIdentifier = @"GistCell";
     return self.starredGists;
 }
 
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"detail"]) {
+        GistViewController *gistViewController = (GistViewController *)segue.destinationViewController;
+        if (gistViewController != nil) {
+            NSIndexPath *selectedRow = (NSIndexPath *)sender;
+            gistViewController.selectedGist = [self targetArray][selectedRow.row];
+        }
+    }
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -138,8 +151,9 @@ static NSString * const GistCellIdentifier = @"GistCell";
 
 #pragma mark - UITableViewDelegate
 
--(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self performSegueWithIdentifier:@"detail" sender:indexPath];
 }
 
 @end
