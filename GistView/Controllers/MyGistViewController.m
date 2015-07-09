@@ -117,7 +117,8 @@ static NSString * const GistCellIdentifier = @"GistCell";
         GistViewController *gistViewController = (GistViewController *)segue.destinationViewController;
         if (gistViewController != nil) {
             NSIndexPath *selectedRow = (NSIndexPath *)sender;
-            gistViewController.selectedGist = [self targetArray][selectedRow.row];
+            Gist *selectedGist = [self targetArray][selectedRow.row];
+            gistViewController.selectedGist = selectedGist;
         }
     }
 }

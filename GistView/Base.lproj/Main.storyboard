@@ -131,7 +131,7 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="文件" id="9Kt-GO-YFt">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="XVB-vv-OmZ" detailTextLabel="kLB-i8-sC5" style="IBUITableViewCellStyleSubtitle" id="srL-At-K9O">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="XVB-vv-OmZ" detailTextLabel="kLB-i8-sC5" style="IBUITableViewCellStyleSubtitle" id="srL-At-K9O">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="srL-At-K9O" id="TRh-04-Zde">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -153,16 +153,6 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="注释" id="iiX-g1-Lp9">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="J6d-Xr-6Th">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="J6d-Xr-6Th" id="9rM-Xc-tbh">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="32G-ja-bfT" id="ucu-Vl-qMU"/>
@@ -174,6 +164,11 @@
                         <barButtonItem key="backBarButtonItem" style="done" systemItem="cancel" id="lJQ-ra-lru"/>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="createdAtLabel" destination="kLB-i8-sC5" id="1DS-eA-FfT"/>
+                        <outlet property="fileNameLabel" destination="XVB-vv-OmZ" id="c7x-jY-hev"/>
+                        <outlet property="usernameLabel" destination="9hu-IP-QRD" id="qF6-Ll-tm4"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1K7-Gx-d3V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
