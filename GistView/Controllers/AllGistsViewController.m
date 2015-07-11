@@ -32,6 +32,8 @@ static NSString * const GistCellIdentifier = @"GistCell";
 
     self.gists = [[NSMutableArray alloc] initWithCapacity:10];
     
+    self.tableView.rowHeight = 65;
+    
     // 注册TableViewCell
     [self.tableView registerNib:[UINib nibWithNibName:LoadingCellIdentifier bundle:nil] forCellReuseIdentifier:LoadingCellIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:NothingFouncdCellIdentifier bundle:nil] forCellReuseIdentifier:NothingFouncdCellIdentifier];
@@ -43,7 +45,6 @@ static NSString * const GistCellIdentifier = @"GistCell";
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             
             [weakSelf searchAllGists:tableView];
-            [tableView.header endRefreshing];
         });
     }];
     
@@ -55,8 +56,6 @@ static NSString * const GistCellIdentifier = @"GistCell";
     // Dispose of any resources that can be recreated.
 }
 
-
-
 #pragma mark - Private
 
 - (void)searchAllGists:(UITableView *)tableView {
@@ -64,9 +63,11 @@ static NSString * const GistCellIdentifier = @"GistCell";
     [sharedClient listAllGist:^(NSArray *gists) {
         self.gists = [NSMutableArray arrayWithArray:gists];
         [tableView reloadData];
+        [tableView.header endRefreshing];
     } failure:^(NSError *error) {
         self.gists = [[NSMutableArray alloc] initWithCapacity:10];
         [tableView reloadData];
+        [tableView.header endRefreshing];
     }];
 }
 

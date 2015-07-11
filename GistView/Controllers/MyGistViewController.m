@@ -57,7 +57,6 @@ static NSString * const GistCellIdentifier = @"GistCell";
             } else {
                 [weakSelf searchStarredGists:tableView];
             }
-            [tableView.header endRefreshing];
         });
     }];
     
@@ -86,9 +85,11 @@ static NSString * const GistCellIdentifier = @"GistCell";
     [sharedClient listAuthenticatedUserAllGist:^(NSArray *gists) {
         self.allGists = [NSMutableArray arrayWithArray:gists];
         [tableView reloadData];
+        [tableView.header endRefreshing];
     } failure:^(NSError *error) {
         self.allGists = [[NSMutableArray alloc] initWithCapacity:10];
         [tableView reloadData];
+        [tableView.header endRefreshing];
     }];
 }
 

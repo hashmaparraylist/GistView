@@ -164,7 +164,7 @@
 
 // 通过URL获取Gists
 - (AFHTTPRequestOperation *)getGistsWithURL:(NSString *)url needToken:(BOOL)isNeedToken success:(void (^)(NSArray *))success failure:(void (^)(NSError *))failure {
-    AFHTTPRequestOperation * operation = [self callApiByMethod:@"GET" url:url parameters:nil needToken:YES success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPRequestOperation * operation = [self callApiByMethod:@"GET" url:url parameters:nil needToken:isNeedToken success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *gists = [[NSMutableArray alloc] initWithCapacity:10];
         for (NSDictionary *rawData in responseObject) {
             Gist *gist = [[Gist alloc] initWithDictionary:rawData];
@@ -185,7 +185,7 @@
     NSLog(@"%@ => %@", method, apiURL);
     
     NSError *serializationError = nil;
-    AFHTTPRequestOperationManager *manager = [self makeOperationManagerNeedToken:YES];
+    AFHTTPRequestOperationManager *manager = [self makeOperationManagerNeedToken:isNeedToken];
     NSMutableURLRequest *request = [manager.requestSerializer requestWithMethod:method URLString:apiURL parameters:parameters error:&serializationError];
     void (^successBlock)(AFHTTPRequestOperation*, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@ SUCCESS => Response[%@]", method, responseObject);
