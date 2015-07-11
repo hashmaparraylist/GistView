@@ -25,9 +25,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:nil];
-    
-    self.navigationItem.backBarButtonItem = backButton;
+//    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:nil];
+//    
+//    self.navigationItem.backBarButtonItem = backButton;
     self.usernameLabel.text = self.selectedGist.owner.login;
     self.fileNameLabel.text = self.selectedGist.files.allKeys[0];
     self.createdAtLabel.text = self.selectedGist.createdAt;

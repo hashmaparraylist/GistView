@@ -81,6 +81,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="mRC-Ow-Sv7">
                         <nil key="title"/>
+                        <barButtonItem key="backBarButtonItem" title="返回" id="AGH-Gd-BZr"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="ACJ-Lg-q71">
                             <rect key="frame" x="180" y="7" width="240" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -102,7 +103,7 @@
             </objects>
             <point key="canvasLocation" x="2239" y="-47"/>
         </scene>
-        <!--Gist 详细-->
+        <!--Gist View Controller-->
         <scene sceneID="lQf-Cd-9TE">
             <objects>
                 <tableViewController id="32G-ja-bfT" customClass="GistViewController" sceneMemberID="viewController">
@@ -151,7 +152,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="LoX-4c-LWC" kind="showDetail" identifier="showFile" id="CBJ-SI-YXD"/>
+                                            <segue destination="LoX-4c-LWC" kind="show" identifier="showFile" id="CBJ-SI-YXD"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -163,7 +164,9 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Gist 详细" id="K7v-WQ-XaQ"/>
+                    <navigationItem key="navigationItem" id="Re7-Ep-tPA">
+                        <barButtonItem key="backBarButtonItem" title="返回" id="War-4c-Qt2"/>
+                    </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="createdAtLabel" destination="kLB-i8-sC5" id="1DS-eA-FfT"/>
@@ -200,9 +203,6 @@
                             <constraint firstAttribute="trailing" secondItem="YYE-Lo-kBy" secondAttribute="trailing" id="uHB-Gi-JC8"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="tIl-Zd-na2">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Hxu-wh-S15"/>
-                    </navigationItem>
                     <connections>
                         <outlet property="webView" destination="YYE-Lo-kBy" id="kD8-GW-Ihs"/>
                     </connections>
@@ -235,7 +235,9 @@
                             <outlet property="delegate" destination="R3r-ro-IsC" id="qvX-go-bjB"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="WOZ-iT-h4x"/>
+                    <navigationItem key="navigationItem" id="WOZ-iT-h4x">
+                        <barButtonItem key="backBarButtonItem" title="返回" id="cRX-ul-gEJ"/>
+                    </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="haB-we-Q7P" userLabel="First Responder" sceneMemberID="firstResponder"/>
