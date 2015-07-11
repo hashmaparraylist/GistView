@@ -6,7 +6,6 @@
 //  Copyright (c) 2015年 Sebastian Qu. All rights reserved.
 //
 
-#import <MBProgressHUD/MBProgressHUD.h>
 #import "AppDelegate.h"
 #import "GitHubClient.h"
 
@@ -14,7 +13,10 @@
 
 @end
 
-@implementation AppDelegate
+@implementation AppDelegate {
+    GitHubClient *_sharedClient;
+    UIStoryboard *_main;
+}
 
 #pragma mark - Lifecycle
 
@@ -47,14 +49,22 @@
 # pragma mark - UIApplicationDelegate
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    
     NSLog(@"*** GitHub callback url: %@", url);
+    
     if ([url.host isEqual:@"oauth"]) {
-        MBProgressHUD *_hud = [MBProgressHUD showHUDAddedTo:self.window.rootViewController.view animated:YES];
-        _hud.labelText = @"认证中...";
-        [[GitHubClient sharedInstance] completeAuthorizeWithCallbackURL:url];
-        return YES;
+        [_sharedClient completeAuthorizeWithCallbackURL:url success:^(id responseObject) {
+            UIViewController *rootView = [_main instantiateViewControllerWithIdentifier:@"main"];
+            [self.window.rootViewController presentViewController:rootView animated:YES completion:nil];
+        } failure:^(NSError *error) {
+            UIViewController *rootView = [_main instantiateViewControllerWithIdentifier:@"failureAuthorize"];
+            [self.window.rootViewController presentViewController:rootView animated:YES completion:nil];
+        }];
+    } else {
+        UIViewController *rootView = [_main instantiateViewControllerWithIdentifier:@"failureAuthorize"];
+        [self.window.rootViewController presentViewController:rootView animated:YES completion:nil];
     }
-    return NO;
+    return YES;
 }
 
 
