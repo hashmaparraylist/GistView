@@ -65,6 +65,8 @@ static NSInteger const GitHubClientErrorSecureConnectionFailed = 9012;
 - (AFHTTPRequestOperation *)listAuthenticatedUserAllGist:(void (^)(NSArray *gists))success failure:(void(^)(NSError *error))failure;
 // 获取认证用户的Starred的Gists
 - (AFHTTPRequestOperation *)listAuthenticatedUserStarredGist:(void (^)(NSArray *))success failure:(void (^)(NSError *))failure;
+// 获取所有的Gists
+- (AFHTTPRequestOperation *)listAllGist:(void (^)(NSArray *gists))success failure:(void(^)(NSError *error))failure;
 
 // 判断是否已取的GitHub认证
 @property (nonatomic, getter = isAuthenticated, readonly) BOOL authenticated;

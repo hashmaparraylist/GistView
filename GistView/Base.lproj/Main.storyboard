@@ -55,13 +55,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="empty" id="4yB-yR-wu8">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="empty" id="4yB-yR-wu8">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4yB-yR-wu8" id="226-WH-XZh">
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="32G-ja-bfT" kind="show" identifier="detail" id="rOh-fg-hfX"/>
+                                            <segue destination="32G-ja-bfT" kind="show" identifier="detail" id="Uk3-pm-mV3"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -102,14 +102,14 @@
             </objects>
             <point key="canvasLocation" x="2239" y="-47"/>
         </scene>
-        <!--Gist View Controller-->
+        <!--Gist 详细-->
         <scene sceneID="lQf-Cd-9TE">
             <objects>
                 <tableViewController id="32G-ja-bfT" customClass="GistViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="L6S-dA-wvU">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="L6S-dA-wvU">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
                             <tableViewSection headerTitle="标题" id="37j-Cb-ca4">
                                 <cells>
@@ -150,6 +150,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="LoX-4c-LWC" kind="showDetail" identifier="showFile" id="CBJ-SI-YXD"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -160,9 +163,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="dp9-XP-xT4">
-                        <barButtonItem key="backBarButtonItem" style="done" systemItem="cancel" id="lJQ-ra-lru"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Gist 详细" id="K7v-WQ-XaQ"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="createdAtLabel" destination="kLB-i8-sC5" id="1DS-eA-FfT"/>
@@ -174,16 +175,52 @@
             </objects>
             <point key="canvasLocation" x="3294" y="321"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Raw File View Controller-->
+        <scene sceneID="bCA-tO-6jK">
+            <objects>
+                <viewController id="LoX-4c-LWC" customClass="RawFileViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bwc-Pw-Ryw"/>
+                        <viewControllerLayoutGuide type="bottom" id="pk8-T3-kgy"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="j9m-pp-9zc">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YYE-Lo-kBy">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="YYE-Lo-kBy" secondAttribute="bottom" id="TUD-kR-LfQ"/>
+                            <constraint firstItem="YYE-Lo-kBy" firstAttribute="top" secondItem="j9m-pp-9zc" secondAttribute="top" id="a8y-nE-leF"/>
+                            <constraint firstItem="YYE-Lo-kBy" firstAttribute="leading" secondItem="j9m-pp-9zc" secondAttribute="leading" id="bbO-no-rpt"/>
+                            <constraint firstAttribute="trailing" secondItem="YYE-Lo-kBy" secondAttribute="trailing" id="uHB-Gi-JC8"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="tIl-Zd-na2">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Hxu-wh-S15"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="webView" destination="YYE-Lo-kBy" id="kD8-GW-Ihs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uIr-bl-uJl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3983" y="321"/>
+        </scene>
+        <!--All Gists View Controller-->
         <scene sceneID="cUV-IL-qBr">
             <objects>
-                <tableViewController id="R3r-ro-IsC" sceneMemberID="viewController">
+                <tableViewController id="R3r-ro-IsC" customClass="AllGistsViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="vNX-xT-2pj">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="1" id="vrr-Vf-mRU">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="1" id="vrr-Vf-mRU">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vrr-Vf-mRU" id="yYA-Ck-x4S">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -245,6 +282,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="rOh-fg-hfX"/>
+        <segue reference="1I1-hF-mep"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -9,6 +9,7 @@
 #import "Gist.h"
 #import "GitHubUser.h"
 #import "GistViewController.h"
+#import "RawFileViewController.h"
 
 @interface GistViewController ()
 
@@ -24,8 +25,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.usernameLabel.text = self.selectedGist.owner.name;
-    self.fileNameLabel.text = self.selectedGist.file[@"name"];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:nil];
+    
+    self.navigationItem.backBarButtonItem = backButton;
+    self.usernameLabel.text = self.selectedGist.owner.login;
+    self.fileNameLabel.text = self.selectedGist.files.allKeys[0];
     self.createdAtLabel.text = self.selectedGist.createdAt;
 }
 
@@ -38,6 +42,10 @@
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"showFile"]) {
+        RawFileViewController *viewController = (RawFileViewController *)segue.destinationViewController;
+        viewController.rawFileUrl = self.selectedGist.files[self.fileNameLabel.text][@"raw_url"];
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -46,5 +54,19 @@
 
 #pragma mark - UITablewViewDelegate
 
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
+    if (section != 0) {
+        return;
+    }
+    
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    [header.textLabel setTextColor:[UIColor blackColor]];
+    Gist *gist = self.selectedGist;
+    if (gist.gistDescription == (NSString*) [NSNull null] || gist.gistDescription.length == 0) {
+        header.textLabel.text = @"(无题)";
+    } else {
+        header.textLabel.text = self.selectedGist.gistDescription;
+    }
+}
 
 @end

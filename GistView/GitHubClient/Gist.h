@@ -21,7 +21,7 @@
 @property (nonatomic, assign) BOOL isPublic;
 @property (nonatomic, copy) GitHubUser *user;
 
-@property (nonatomic, copy) NSDictionary *file;
+@property (nonatomic, copy) NSDictionary *files;
 @property (nonatomic, assign) NSInteger comments;
 @property (nonatomic, copy) NSString *commentsUrl;
 @property (nonatomic, copy) NSString *htmlUrl;

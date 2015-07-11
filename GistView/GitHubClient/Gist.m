@@ -35,7 +35,7 @@
     if (rawData[@"user"] != [NSNull null]) {
         self.user = [[GitHubUser alloc] initWithDictionary:rawData[@"user"]];
     }
-    self.file = rawData[@"file"];
+    self.files = rawData[@"files"];
     NSNumber *comments = rawData[@"comments"];
     self.comments = [comments integerValue];
     self.commentsUrl = rawData[@"comments_url"];

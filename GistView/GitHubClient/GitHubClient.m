@@ -154,6 +154,12 @@
     return operation;
 }
 
+- (AFHTTPRequestOperation *)listAllGist:(void (^)(NSArray *))success failure:(void (^)(NSError *))failure {
+    NSString *apiUrl = [NSString stringWithFormat:GitHubApiListAuthenticatedUserAllGist, GitHubURLApiEndpoint];
+    AFHTTPRequestOperation *operation = [self getGistsWithURL:apiUrl needToken:NO success:success failure:failure];
+    return operation;
+}
+
 # pragma mark - Private
 
 // 通过URL获取Gists

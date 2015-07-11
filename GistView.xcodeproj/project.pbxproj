@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		82192AAF1B4C226E00428545 /* GistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82192AAE1B4C226D00428545 /* GistViewController.m */; };
+		82192AB21B51482500428545 /* RawFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82192AB11B51482500428545 /* RawFileViewController.m */; };
+		82192AB51B51518500428545 /* AllGistsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82192AB41B51518500428545 /* AllGistsViewController.m */; };
 		821D8C441B4438DC009EADB4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 821D8C431B4438DC009EADB4 /* CoreGraphics.framework */; };
 		821D8C471B47BC53009EADB4 /* Gist.m in Sources */ = {isa = PBXBuildFile; fileRef = 821D8C461B47BC53009EADB4 /* Gist.m */; };
 		821D8C511B491FB5009EADB4 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 821D8C4F1B491FB5009EADB4 /* LoadingCell.xib */; };
@@ -43,6 +45,10 @@
 		77F28DD0C07AE92DD3EB8D3D /* Pods-GistView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GistView.release.xcconfig"; path = "Pods/Target Support Files/Pods-GistView/Pods-GistView.release.xcconfig"; sourceTree = "<group>"; };
 		82192AAD1B4C226D00428545 /* GistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GistViewController.h; sourceTree = "<group>"; };
 		82192AAE1B4C226D00428545 /* GistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GistViewController.m; sourceTree = "<group>"; };
+		82192AB01B51482500428545 /* RawFileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RawFileViewController.h; sourceTree = "<group>"; };
+		82192AB11B51482500428545 /* RawFileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RawFileViewController.m; sourceTree = "<group>"; };
+		82192AB31B51518500428545 /* AllGistsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllGistsViewController.h; sourceTree = "<group>"; };
+		82192AB41B51518500428545 /* AllGistsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllGistsViewController.m; sourceTree = "<group>"; };
 		821D8C431B4438DC009EADB4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		821D8C451B47BC53009EADB4 /* Gist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Gist.h; sourceTree = "<group>"; };
 		821D8C461B47BC53009EADB4 /* Gist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Gist.m; sourceTree = "<group>"; };
@@ -119,6 +125,10 @@
 				828896201B495A5200756967 /* GistCell.xib */,
 				82192AAD1B4C226D00428545 /* GistViewController.h */,
 				82192AAE1B4C226D00428545 /* GistViewController.m */,
+				82192AB01B51482500428545 /* RawFileViewController.h */,
+				82192AB11B51482500428545 /* RawFileViewController.m */,
+				82192AB31B51518500428545 /* AllGistsViewController.h */,
+				82192AB41B51518500428545 /* AllGistsViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -356,9 +366,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82192AB51B51518500428545 /* AllGistsViewController.m in Sources */,
 				82994E131B3DB9BF00B6FDE8 /* AppDelegate.m in Sources */,
 				825E57A61B4183C900C84050 /* GitHubUser.m in Sources */,
 				82994E101B3DB9BF00B6FDE8 /* main.m in Sources */,
+				82192AB21B51482500428545 /* RawFileViewController.m in Sources */,
 				823725CB1B3F1AFF0054AEAE /* GitHubClient.m in Sources */,
 				828896211B495A5200756967 /* GistCell.m in Sources */,
 				825E57A31B417AD200C84050 /* LoadingViewController.m in Sources */,
