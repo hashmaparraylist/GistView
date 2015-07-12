@@ -26,7 +26,7 @@
         <scene sceneID="uF5-qA-58M">
             <objects>
                 <navigationController id="MDi-S1-8bo" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="我的Gist" id="EE8-cI-hEc"/>
+                    <tabBarItem key="tabBarItem" title="我的Gist" image="MyGist" id="EE8-cI-hEc"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Us7-mQ-TgE">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -263,11 +263,11 @@
             </objects>
             <point key="canvasLocation" x="765" y="321"/>
         </scene>
-        <!--Item2-->
+        <!--浏览-->
         <scene sceneID="pyk-rv-pTG">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7SS-Yd-Q1D" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item2" id="O5k-iv-jwT"/>
+                    <tabBarItem key="tabBarItem" title="浏览" image="AllGist" id="O5k-iv-jwT"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="wrb-ix-kBh">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -283,6 +283,10 @@
             <point key="canvasLocation" x="1542" y="654"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="AllGist" width="60" height="60"/>
+        <image name="MyGist" width="60" height="60"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="1I1-hF-mep"/>
     </inferredMetricsTieBreakers>

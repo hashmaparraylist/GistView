@@ -39,6 +39,9 @@
     self.createAtLabel.text = gist.createdAt;
     
     [self.ownerAvatar setImageWithURL:[NSURL URLWithString:gist.owner.avatarUrl] placeholderImage:[UIImage imageNamed:@"Placeholder"]];
+    self.ownerAvatar.layer.cornerRadius = self.ownerAvatar.bounds.size.width / 2;
+    self.ownerAvatar.clipsToBounds = true;
+    
 }
 
 #pragma mark - UITableViewCell
