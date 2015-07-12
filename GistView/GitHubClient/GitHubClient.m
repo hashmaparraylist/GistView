@@ -36,6 +36,16 @@
 
 - (instancetype)initSelf {
     self = [super init];
+    
+    // load token from data file
+    NSString *path = [self authorizeFilePath];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        NSData *data = [[NSData alloc] initWithContentsOfFile:path];
+        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+        self.token = [unarchiver decodeObjectForKey:@"token"];
+        [unarchiver finishDecoding];
+    }
+    
     return self;
 }
 
@@ -120,6 +130,13 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:GitHubAuthenticatedNotifiactionFailure object:error];
         }
         self.token = jsonObject[@"access_token"];
+        // Save token to datefile
+        NSMutableData *data = [[NSMutableData alloc] init];
+        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+        [archiver encodeObject:self.token forKey:@"token"];
+        [archiver finishEncoding];
+        [data writeToFile:[self authorizeFilePath] atomically:YES];
+        // Notify ViewController authorize is success
         [[NSNotificationCenter defaultCenter] postNotificationName:GitHubAuthenticatedNotifiactionSuccess object:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [[NSNotificationCenter defaultCenter] postNotificationName:GitHubAuthenticatedNotifiactionFailure object:error];
@@ -160,6 +177,15 @@
     return operation;
 }
 
+- (NSString *)doucmentsDirecotry {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    return [paths objectAtIndex:0];
+}
+
+- (NSString *)authorizeFilePath {
+    return [[self doucmentsDirecotry] stringByAppendingPathComponent:@"gistview.plist"];
+}
+
 # pragma mark - Private
 
 // 通过URL获取Gists
@@ -188,7 +214,7 @@
     AFHTTPRequestOperationManager *manager = [self makeOperationManagerNeedToken:isNeedToken];
     NSMutableURLRequest *request = [manager.requestSerializer requestWithMethod:method URLString:apiURL parameters:parameters error:&serializationError];
     void (^successBlock)(AFHTTPRequestOperation*, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@ SUCCESS => Response[%@]", method, responseObject);
+//        NSLog(@"%@ SUCCESS => Response[%@]", method, responseObject);
         success(operation, responseObject);
     };
     
@@ -279,7 +305,6 @@
     } else {
         NSLog(@"Unexpected JSON for error response: %@", JSON);
     }
-    
     
     NSString *message = responseDictionary[@"message"];
     

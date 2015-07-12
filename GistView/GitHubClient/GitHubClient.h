@@ -52,7 +52,10 @@ static NSInteger const GitHubClientErrorSecureConnectionFailed = 9012;
 @class GitHubUser;
 
 @interface GitHubClient : NSObject
-
+// 获取document目录
+- (NSString *)doucmentsDirecotry;
+// 获取配置文件
+- (NSString *)authorizeFilePath;
 // 获取 GitHubClient's Singleton Instance
 + (instancetype)sharedInstance;
 // 认证 (通过GitHub's oauth2.0)

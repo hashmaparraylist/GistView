@@ -29,6 +29,8 @@
     _sharedClient = [GitHubClient sharedInstance];
     if (!_sharedClient.isAuthenticated) {
         [_sharedClient authorize];
+    } else {
+        [self authorizedSuccess:nil];
     }
 }
 
