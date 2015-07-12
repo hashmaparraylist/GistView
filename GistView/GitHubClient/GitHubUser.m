@@ -2,17 +2,11 @@
 //  GitHubUser.m
 //  GistView
 //
-//  Created by Sebastian Qu on 15/6/29.
+//  Created by 瞿盛 on 15/6/29.
 //  Copyright (c) 2015年 Sebastian Qu. All rights reserved.
 //
 
 #import "GitHubUser.h"
-
-@interface GitHubUser()
-
-@property (nonatomic, strong) NSDictionary *rawData;
-
-@end
 
 @implementation GitHubUser
 
@@ -20,9 +14,6 @@
 
 - (instancetype)initWithDictionary:(NSDictionary *)githubUser {
     self = [super init];
-    if (githubUser == nil) {
-        return self;
-    }
     self.login = githubUser[@"login"];
     self.id = githubUser[@"id"];
     self.avatarUrl = githubUser[@"avatar_url"];
@@ -40,16 +31,7 @@
     self.publicGits = [(NSNumber *)githubUser[@"public_gits"] integerValue];
     self.followers = [(NSNumber *)githubUser[@"followers"] integerValue];
     self.following = [(NSNumber *)githubUser[@"following"] integerValue];
-    
-    self.rawData = [[NSDictionary alloc] initWithDictionary:githubUser copyItems:YES];
     return self;
-}
-
-#pragma mark - NSCopy
-
-- (id)copyWithZone:(NSZone *)zone {
-    GitHubUser *copy = [[GitHubUser alloc] initWithDictionary:self.rawData];
-    return copy;
 }
 
 @end

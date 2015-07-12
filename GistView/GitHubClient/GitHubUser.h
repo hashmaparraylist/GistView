@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface GitHubUser : NSObject <NSCopying>
+@interface GitHubUser : NSObject
 
 @property (nonatomic, copy) NSString *login;
 @property (nonatomic, copy) NSString *id;
