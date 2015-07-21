@@ -281,6 +281,11 @@
                     case NSURLErrorClientCertificateRejected:
                     case NSURLErrorClientCertificateRequired:
                         errorCode = GitHubClientErrorSecureConnectionFailed;
+                        errorMessage = @"安全连接失败，请稍后再试。";
+                        break;
+                    case NSURLErrorNotConnectedToInternet:
+                        errorCode = NSURLErrorNotConnectedToInternet;
+                        errorMessage = @"网路不给力，请稍后再试!";
                         break;
                 }
             }
@@ -288,7 +293,7 @@
     }
     
     errorInfo[@"code"] = @(errorCode);
-    errorInfo[@"message"] = errorMessage;
+    errorInfo[@"message"] = [NSString stringWithFormat:@"%@(%ld)", errorMessage, errorCode];
     
     return [[NSError alloc]initWithDomain:GitHubClientErrorDomain code:errorCode userInfo:errorInfo];
 }
