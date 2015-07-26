@@ -98,9 +98,11 @@ static NSString * const GistCellIdentifier = @"GistCell";
     [sharedClient listAuthenticatedUserStarredGist:^(NSArray * gists) {
         self.starredGists = [NSMutableArray arrayWithArray:gists];
         [tableView reloadData];
+        [tableView.header endRefreshing];
     } failure:^(NSError *error) {
         self.starredGists = [[NSMutableArray alloc] initWithCapacity:10];
         [tableView reloadData];
+        [tableView.header endRefreshing];
     }];
 }
 

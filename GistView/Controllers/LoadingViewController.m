@@ -29,6 +29,8 @@
     _sharedClient = [GitHubClient sharedInstance];
     if (!_sharedClient.isAuthenticated) {
         [_sharedClient authorize];
+    } else {
+        [self authorizedSuccess:nil];
     }
 }
 
@@ -55,11 +57,10 @@
         [self presentViewController:mainViewController animated:NO completion:^{
             [MBProgressHUD hideHUDForView:self.view animated:YES];
         }];
-        
-        
     } failure:^(NSError *error) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         NSString *errorMessage = error.userInfo[@"message"];
+        NSLog(@"syncAuthenticatedUserInfo-> %@", errorMessage);
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"错误"
                                                         message:errorMessage
                                                        delegate:self
@@ -75,6 +76,7 @@
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     NSError *errorInfo = [error object];
     NSString *errorMessage = errorInfo.userInfo[@"message"];
+    NSLog(@"authorizedFailure-> %@", errorMessage);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"错误"
                                                     message:errorMessage
                                                    delegate:self
@@ -88,7 +90,7 @@
 
 -(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (alertView.tag == 100) {
-        // 出错时的弹出框
+        [_sharedClient authorize];
     } else {
         
     }
