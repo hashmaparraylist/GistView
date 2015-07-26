@@ -10,6 +10,8 @@
 #import "Gist.h"
 #import "GistCell.h"
 #import "GitHubUser.h"
+#import "Util.h"
+#import "GitHubClient.h"
 
 @interface GistCell()
 
@@ -36,7 +38,7 @@
     } else {
         self.descriptionLabel.text = gist.gistDescription;
     }
-    self.createAtLabel.text = gist.createdAt;
+    self.createAtLabel.text = [Util formaterDateTime:gist.createdAt formatterString:GitHubRawDataDateTimeFormatter];
     
     [self.ownerAvatar setImageWithURL:[NSURL URLWithString:gist.owner.avatarUrl] placeholderImage:[UIImage imageNamed:@"Placeholder"]];
     self.ownerAvatar.layer.cornerRadius = self.ownerAvatar.bounds.size.width / 2;

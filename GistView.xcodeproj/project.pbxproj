@@ -16,6 +16,7 @@
 		821D8C561B49287C009EADB4 /* NothingFoundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 821D8C541B49287C009EADB4 /* NothingFoundCell.xib */; };
 		822E85CB1B4675F200D8F9BE /* MyGistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 822E85CA1B4675F200D8F9BE /* MyGistViewController.m */; };
 		823725CB1B3F1AFF0054AEAE /* GitHubClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 823725CA1B3F1AFF0054AEAE /* GitHubClient.m */; };
+		8244DA4B1B64CDC4002398AC /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 8244DA4A1B64CDC4002398AC /* Util.m */; };
 		825E57A31B417AD200C84050 /* LoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 825E57A21B417AD200C84050 /* LoadingViewController.m */; };
 		825E57A61B4183C900C84050 /* GitHubUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 825E57A51B4183C900C84050 /* GitHubUser.m */; };
 		828896211B495A5200756967 /* GistCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8288961F1B495A5200756967 /* GistCell.m */; };
@@ -58,6 +59,8 @@
 		822E85CA1B4675F200D8F9BE /* MyGistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyGistViewController.m; sourceTree = "<group>"; };
 		823725C91B3F1AFF0054AEAE /* GitHubClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GitHubClient.h; sourceTree = "<group>"; };
 		823725CA1B3F1AFF0054AEAE /* GitHubClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GitHubClient.m; sourceTree = "<group>"; };
+		8244DA491B64CDC4002398AC /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
+		8244DA4A1B64CDC4002398AC /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Util.m; sourceTree = "<group>"; };
 		825E57A11B417AD200C84050 /* LoadingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingViewController.h; sourceTree = "<group>"; };
 		825E57A21B417AD200C84050 /* LoadingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingViewController.m; sourceTree = "<group>"; };
 		825E57A41B4183C900C84050 /* GitHubUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GitHubUser.h; sourceTree = "<group>"; };
@@ -111,6 +114,15 @@
 			path = GitHubClient;
 			sourceTree = "<group>";
 		};
+		8244DA481B64CDAC002398AC /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				8244DA491B64CDC4002398AC /* Util.h */,
+				8244DA4A1B64CDC4002398AC /* Util.m */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		825E57A01B417AB700C84050 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -156,6 +168,7 @@
 		82994E0C1B3DB9BF00B6FDE8 /* GistView */ = {
 			isa = PBXGroup;
 			children = (
+				8244DA481B64CDAC002398AC /* Utils */,
 				825E57A01B417AB700C84050 /* Controllers */,
 				823725C81B3F18C80054AEAE /* GitHubClient */,
 				82994E111B3DB9BF00B6FDE8 /* AppDelegate.h */,
@@ -377,6 +390,7 @@
 				82192AAF1B4C226E00428545 /* GistViewController.m in Sources */,
 				821D8C471B47BC53009EADB4 /* Gist.m in Sources */,
 				822E85CB1B4675F200D8F9BE /* MyGistViewController.m in Sources */,
+				8244DA4B1B64CDC4002398AC /* Util.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

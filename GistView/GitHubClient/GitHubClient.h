@@ -47,6 +47,9 @@ static NSInteger const GitHubClientErrorTokenAuthenticationUnsupported = 9010;
 static NSInteger const GitHubClientErrorUnsupportedServerScheme = 9011;
 static NSInteger const GitHubClientErrorSecureConnectionFailed = 9012;
 
+// Raw Data's Fromatter
+static NSString * const GitHubRawDataDateTimeFormatter = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
+
 #endif
 
 @class GitHubUser;

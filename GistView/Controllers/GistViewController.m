@@ -7,8 +7,10 @@
 //
 
 #import "Gist.h"
+#import "GitHubClient.h"
 #import "GitHubUser.h"
 #import "GistViewController.h"
+#import "Util.h"
 #import "RawFileViewController.h"
 
 @interface GistViewController ()
@@ -25,12 +27,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:nil];
-//    
-//    self.navigationItem.backBarButtonItem = backButton;
-    self.usernameLabel.text = self.selectedGist.owner.login;
+    if (self.selectedGist.owner) {
+        self.usernameLabel.text = self.selectedGist.owner.login;
+    } else {
+        self.usernameLabel.text = @"(匿名)";
+    }
     self.fileNameLabel.text = self.selectedGist.files.allKeys[0];
-    self.createdAtLabel.text = self.selectedGist.createdAt;
+    self.createdAtLabel.text = [Util formaterDateTime:self.selectedGist.createdAt formatterString:GitHubRawDataDateTimeFormatter];
 }
 
 - (void)didReceiveMemoryWarning {
