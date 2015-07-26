@@ -27,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (self.selectedGist.owner) {
+    if (self.selectedGist.owner && self.selectedGist.owner.login) {
         self.usernameLabel.text = self.selectedGist.owner.login;
     } else {
         self.usernameLabel.text = @"(匿名)";
@@ -56,20 +56,80 @@
 
 
 #pragma mark - UITablewViewDelegate
+//
+//- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
+//    if (section != 0) {
+//        return;
+//    }
+//    
+//    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+//    [header.textLabel setTextColor:[UIColor blackColor]];
+//    Gist *gist = self.selectedGist;
+//    if (gist.gistDescription == (NSString*) [NSNull null] || gist.gistDescription.length == 0) {
+//        header.textLabel.text = @"(无题)";
+//    } else {
+//        header.textLabel.text = self.selectedGist.gistDescription;
+//    }
+////    header.backgroundView.bounds.size.height = header.textLabel.bounds.size.height;
+//    CGRect newRect = CGRectMake(header.bounds.origin.x, header.bounds.origin.y, header.bounds.size.width, header.textLabel.bounds.size.height);
+//    [header setBounds:newRect];
+//}
 
-- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (section !=0) {
+        return [super tableView:tableView viewForHeaderInSection:section];
+    }
+    /* Create custom view to display section header... */
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, tableView.frame.size.width, 18)];
+    [label setFont:[UIFont boldSystemFontOfSize:14]];
+    label.lineBreakMode = NSLineBreakByWordWrapping;
+    label.numberOfLines = 0;
+    
+    Gist *gist = self.selectedGist;
+    NSString *text;
+    if (gist.gistDescription == (NSString*) [NSNull null] || gist.gistDescription.length == 0) {
+        text = @"(无题)";
+    } else {
+        text = [NSString stringWithString:self.selectedGist.gistDescription];
+    }
+    CGSize maximumLabelSize = CGSizeMake(tableView.frame.size.width, FLT_MAX);
+    CGSize expectedLabelSize = [text boundingRectWithSize:maximumLabelSize
+                                                  options:NSStringDrawingUsesLineFragmentOrigin
+                                               attributes:@{NSFontAttributeName:label.font}
+                                                  context:nil].size;
+
+    CGRect newFrame = label.frame;
+    newFrame.size.height = expectedLabelSize.height;
+    label.frame = newFrame;
+    label.text = text;
+    label.tag = 1002;
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, expectedLabelSize.height + 10)];
+    [view addSubview:label];
+    [view sizeToFit];
+    return view;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section != 0) {
-        return;
+        return [super tableView:tableView heightForHeaderInSection:section];
     }
     
-    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
-    [header.textLabel setTextColor:[UIColor blackColor]];
     Gist *gist = self.selectedGist;
+    NSString *text;
     if (gist.gistDescription == (NSString*) [NSNull null] || gist.gistDescription.length == 0) {
-        header.textLabel.text = @"(无题)";
+        text = @"(无题)";
     } else {
-        header.textLabel.text = self.selectedGist.gistDescription;
+        text = [NSString stringWithString:self.selectedGist.gistDescription];
     }
+    CGSize maximumLabelSize = CGSizeMake(tableView.frame.size.width, FLT_MAX);
+    CGSize expectedLabelSize = [text boundingRectWithSize:maximumLabelSize
+                                                  options:NSStringDrawingUsesLineFragmentOrigin
+                                               attributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:14]}
+                                                  context:nil].size;
+
+    CGFloat defaultHeight = [super tableView:tableView heightForHeaderInSection:section];
+    CGFloat expectHeght = expectedLabelSize.height + 10 + 10;
+    return (defaultHeight > expectHeght) ? defaultHeight : expectHeght;
 }
 
 @end
