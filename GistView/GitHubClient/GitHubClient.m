@@ -293,7 +293,7 @@
     }
     
     errorInfo[@"code"] = @(errorCode);
-    errorInfo[@"message"] = [NSString stringWithFormat:@"%@(%ld)", errorMessage, errorCode];
+    errorInfo[@"message"] = [NSString stringWithFormat:@"%@(%ld)", errorMessage, (long)errorCode];
     
     return [[NSError alloc]initWithDomain:GitHubClientErrorDomain code:errorCode userInfo:errorInfo];
 }

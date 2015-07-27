@@ -31,7 +31,7 @@
     if (rawData[@"owner"] != [NSNull null]) {
         self.owner = [[GitHubUser alloc] initWithDictionary:rawData[@"owner"]];
     }
-    self.isPublic = rawData[@"public"];
+    self.isPublic = (BOOL)rawData[@"public"];
     if (rawData[@"user"] != [NSNull null]) {
         self.user = [[GitHubUser alloc] initWithDictionary:rawData[@"user"]];
     }
