@@ -56,24 +56,6 @@
 
 
 #pragma mark - UITablewViewDelegate
-//
-//- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
-//    if (section != 0) {
-//        return;
-//    }
-//    
-//    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
-//    [header.textLabel setTextColor:[UIColor blackColor]];
-//    Gist *gist = self.selectedGist;
-//    if (gist.gistDescription == (NSString*) [NSNull null] || gist.gistDescription.length == 0) {
-//        header.textLabel.text = @"(无题)";
-//    } else {
-//        header.textLabel.text = self.selectedGist.gistDescription;
-//    }
-////    header.backgroundView.bounds.size.height = header.textLabel.bounds.size.height;
-//    CGRect newRect = CGRectMake(header.bounds.origin.x, header.bounds.origin.y, header.bounds.size.width, header.textLabel.bounds.size.height);
-//    [header setBounds:newRect];
-//}
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section !=0) {

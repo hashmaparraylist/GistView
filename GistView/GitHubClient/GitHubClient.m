@@ -42,7 +42,7 @@
     if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
         NSData *data = [[NSData alloc] initWithContentsOfFile:path];
         NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-        self.token = [unarchiver decodeObjectForKey:@"token"];
+        self.token = [unarchiver decodeObjectForKey:GitHubAuthorizeContentKeyToken];
         [unarchiver finishDecoding];
     }
     
@@ -131,11 +131,7 @@
         }
         self.token = jsonObject[@"access_token"];
         // Save token to datefile
-        NSMutableData *data = [[NSMutableData alloc] init];
-        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-        [archiver encodeObject:self.token forKey:@"token"];
-        [archiver finishEncoding];
-        [data writeToFile:[self authorizeFilePath] atomically:YES];
+        [self saveFileWithKey:GitHubAuthorizeContentKeyToken value:self.token];
         // Notify ViewController authorize is success
         [[NSNotificationCenter defaultCenter] postNotificationName:GitHubAuthenticatedNotifiactionSuccess object:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -150,6 +146,9 @@
     success:^(AFHTTPRequestOperation *operation, id responseObject) {
         GitHubUser *user = [[GitHubUser alloc] initWithDictionary:responseObject];
         _authenticatedUser = user;
+        // save user id and avatar url to file
+        [self saveFileWithKey:GitHubAuthorizeContentKeyUserID value:user.login];
+        [self saveFileWithKey:GitHubAuthorizeContentKeyAvatarURL value:user.avatarUrl];
         success(user);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         _authenticatedUser = nil;
@@ -187,6 +186,14 @@
 }
 
 # pragma mark - Private
+
+- (void)saveFileWithKey:(NSString *)key value:(NSString *)value {
+    NSMutableData *data = [[NSMutableData alloc] init];
+    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+    [archiver encodeObject:value forKey:key];
+    [archiver finishEncoding];
+    [data writeToFile:[self authorizeFilePath] atomically:YES];
+}
 
 // 通过URL获取Gists
 - (AFHTTPRequestOperation *)getGistsWithURL:(NSString *)url needToken:(BOOL)isNeedToken success:(void (^)(NSArray *))success failure:(void (^)(NSError *))failure {

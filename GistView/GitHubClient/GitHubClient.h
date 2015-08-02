@@ -50,6 +50,11 @@ static NSInteger const GitHubClientErrorSecureConnectionFailed = 9012;
 // Raw Data's Fromatter
 static NSString * const GitHubRawDataDateTimeFormatter = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
 
+// Authorize's File Key
+static NSString * const GitHubAuthorizeContentKeyToken = @"GitHubAuthorizeContentKeyToken";
+static NSString * const GitHubAuthorizeContentKeyUserID = @"GitHubAuthorizeContentKeyUserID";
+static NSString * const GitHubAuthorizeContentKeyAvatarURL = @"GitHubAuthorizeContentKeyAvatarURL";
+
 #endif
 
 @class GitHubUser;

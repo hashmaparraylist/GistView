@@ -12,7 +12,7 @@
 #import "LoadingViewController.h"
 
 @interface LoadingViewController () <UIAlertViewDelegate>
-
+@property (weak, nonatomic) IBOutlet UIImageView *avatarUrl;
 @end
 
 @implementation LoadingViewController {
@@ -23,6 +23,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // 
+    self.avatarUrl.layer.cornerRadius = self.avatarUrl.bounds.size.width / 2;
+    self.avatarUrl.clipsToBounds = true;
+    
     // 注册NSNotification
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(authorizedSuccess:) name:GitHubAuthenticatedNotifiactionSuccess object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(authorizedFailure:) name:GitHubAuthenticatedNotifiactionFailure object:nil];
