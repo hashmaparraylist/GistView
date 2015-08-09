@@ -12,6 +12,8 @@
 #import "LoadingViewController.h"
 
 @interface LoadingViewController () <UIAlertViewDelegate>
+@property (weak, nonatomic) IBOutlet UIButton *loginBtn;
+@property (weak, nonatomic) IBOutlet UIButton *reLoginBtn;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarUrl;
 @end
 
@@ -24,18 +26,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // 
-    self.avatarUrl.layer.cornerRadius = self.avatarUrl.bounds.size.width / 2;
-    self.avatarUrl.clipsToBounds = true;
-    
     // 注册NSNotification
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(authorizedSuccess:) name:GitHubAuthenticatedNotifiactionSuccess object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(authorizedFailure:) name:GitHubAuthenticatedNotifiactionFailure object:nil];
+    
+    self.avatarUrl.layer.cornerRadius = self.avatarUrl.bounds.size.width / 2;
+    self.avatarUrl.clipsToBounds = true;
+    
     _sharedClient = [GitHubClient sharedInstance];
     if (!_sharedClient.isAuthenticated) {
-        [_sharedClient authorize];
+//        [_sharedClient authorize];
+        self.loginBtn.hidden = YES;
+        self.reLoginBtn.titleLabel.text = @"登陆";
     } else {
-        [self authorizedSuccess:nil];
+//        [self authorizedSuccess:nil];
+        self.loginBtn.hidden = NO;
+        self.reLoginBtn.titleLabel.text = @"使用其他账户登陆";
     }
 }
 
@@ -89,6 +95,14 @@
                                           otherButtonTitles:nil];
     [alert setTag:100];
     [alert show];
+}
+
+#pragma mark - Actions
+
+- (IBAction)authorize:(id)sender {
+}
+
+- (IBAction)reAuthorize:(id)sender {
 }
 
 #pragma mark - UIAlertViewDelegate

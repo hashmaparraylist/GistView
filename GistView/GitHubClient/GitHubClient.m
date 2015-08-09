@@ -38,12 +38,18 @@
     self = [super init];
     
     // load token from data file
-    NSString *path = [self authorizeFilePath];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-        NSData *data = [[NSData alloc] initWithContentsOfFile:path];
-        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-        self.token = [unarchiver decodeObjectForKey:GitHubAuthorizeContentKeyToken];
-        [unarchiver finishDecoding];
+//    NSString *path = [self authorizeFilePath];
+//    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+//        NSData *data = [[NSData alloc] initWithContentsOfFile:path];
+//        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+//        self.token = [unarchiver decodeObjectForKey:GitHubAuthorizeContentKeyToken];
+//        [unarchiver finishDecoding];
+//    }
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *token = [defaults stringForKey:GitHubAuthorizeContentKeyToken];
+    if (token) {
+        self.token = token;
     }
     
     return self;
@@ -188,11 +194,16 @@
 # pragma mark - Private
 
 - (void)saveFileWithKey:(NSString *)key value:(NSString *)value {
-    NSMutableData *data = [[NSMutableData alloc] init];
-    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-    [archiver encodeObject:value forKey:key];
-    [archiver finishEncoding];
-    [data writeToFile:[self authorizeFilePath] atomically:YES];
+//    NSMutableData *data = [[NSMutableData alloc] init];
+//    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+//    [archiver encodeObject:value forKey:key];
+//    [archiver finishEncoding];
+//    [data writeToFile:[self authorizeFilePath] atomically:YES];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [defaults setObject:value forKey:key];
+    [defaults synchronize];
 }
 
 // 通过URL获取Gists

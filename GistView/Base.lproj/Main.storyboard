@@ -17,20 +17,45 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="C3m-tC-0Hq">
-                                <rect key="frame" x="250" y="250" width="100" height="100"/>
+                                <rect key="frame" x="270" y="112" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="wja-Wv-Tjm"/>
+                                    <constraint firstAttribute="width" constant="60" id="zGh-RF-VVC"/>
+                                </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qum-LY-brf">
+                                <rect key="frame" x="240" y="226" width="120" height="30"/>
+                                <state key="normal" title="使用当前账号登陆">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="authorize:" destination="u5Q-oe-Tyc" eventType="touchUpInside" id="n4c-ra-9mE"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="umI-vE-x02">
+                                <rect key="frame" x="240" y="285" width="120" height="30"/>
+                                <state key="normal" title="使用其他账号登陆">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="reAuthorize:" destination="u5Q-oe-Tyc" eventType="touchUpInside" id="sNU-cf-PYB"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="C3m-tC-0Hq" firstAttribute="leading" secondItem="Rdt-45-Dpp" secondAttribute="leading" constant="250" id="cSA-Ki-mKK"/>
-                            <constraint firstAttribute="centerX" secondItem="C3m-tC-0Hq" secondAttribute="centerX" id="fch-tn-r4g"/>
-                            <constraint firstItem="C3m-tC-0Hq" firstAttribute="centerY" secondItem="Rdt-45-Dpp" secondAttribute="centerY" id="kqw-oC-xla"/>
-                            <constraint firstAttribute="trailing" secondItem="C3m-tC-0Hq" secondAttribute="trailing" constant="250" id="m7L-dE-Mim"/>
-                            <constraint firstItem="C3m-tC-0Hq" firstAttribute="top" secondItem="Xb3-SM-LoC" secondAttribute="bottom" constant="230" id="v1D-vs-4JB"/>
+                            <constraint firstItem="C3m-tC-0Hq" firstAttribute="top" secondItem="Xb3-SM-LoC" secondAttribute="bottom" constant="92" id="21f-n1-CIj"/>
+                            <constraint firstItem="Qum-LY-brf" firstAttribute="top" secondItem="C3m-tC-0Hq" secondAttribute="bottom" constant="54" id="Dnl-BP-fJw"/>
+                            <constraint firstItem="umI-vE-x02" firstAttribute="top" secondItem="Qum-LY-brf" secondAttribute="bottom" constant="29" id="WV9-84-8Uh"/>
+                            <constraint firstAttribute="centerX" secondItem="Qum-LY-brf" secondAttribute="centerX" id="dA4-CM-B9P"/>
+                            <constraint firstAttribute="centerX" secondItem="umI-vE-x02" secondAttribute="centerX" id="dfo-n9-QKd"/>
+                            <constraint firstAttribute="centerX" secondItem="C3m-tC-0Hq" secondAttribute="centerX" id="iQT-yh-Bke"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="avatarUrl" destination="C3m-tC-0Hq" id="Luf-f6-VJX"/>
+                        <outlet property="loginBtn" destination="Qum-LY-brf" id="PER-TP-9AO"/>
+                        <outlet property="reLoginBtn" destination="umI-vE-x02" id="aO8-dH-MeI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z0f-9D-gsf" userLabel="First Responder" sceneMemberID="firstResponder"/>
