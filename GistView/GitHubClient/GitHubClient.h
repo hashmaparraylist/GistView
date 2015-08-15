@@ -25,10 +25,12 @@ static NSString * const GitHubApiAuthenticatedUser = @"%@/user";
 static NSString * const GitHubApiListAuthenticatedUserAllGist = @"%@/gists";            // List the Authenticated user's gists
 static NSString * const GitHubApiListAuthenticatedUserStarredGist = @"%@/gists/starred"; // List the Authenticated user's starred gists
 //static NSString * const GitHubApiListAuthenticatedUserPublicGist = @"%@/gists/public";  // List the Authenticated user's public gists
+static NSString * const GitHubApiRevokeAuthorization = @"%@/applications/%@/tokens/%@";
 
 // APP Setting
 static NSString * const GitHubClientID = @"fafb0af1c792afc8aac6";
 static NSString * const GitHubClientSecret = @"f30e7b2071b7dc763db53a38c0ad4528dadb013a";
+static NSString * const GitHubBasicAuthorize = @"Basic ZmFmYjBhZjFjNzkyYWZjOGFhYzY6ZjMwZTdiMjA3MWI3ZGM3NjNkYjUzYTM4YzBhZDQ1MjhkYWRiMDEzYQ==";
 
 // NSError Domain
 static NSString * const GitHubClientErrorDomain = @"GitHubClientErrorDomain";
@@ -78,6 +80,10 @@ static NSString * const GitHubAuthorizeContentKeyAvatarURL = @"GitHubAuthorizeCo
 - (AFHTTPRequestOperation *)listAuthenticatedUserStarredGist:(void (^)(NSArray *))success failure:(void (^)(NSError *))failure;
 // 获取所有的Gists
 - (AFHTTPRequestOperation *)listAllGist:(void (^)(NSArray *gists))success failure:(void(^)(NSError *error))failure;
+// 删除当前授权用户
+- (AFHTTPRequestOperation *)deleteAuthorization:(void (^)(void))success failure:(void(^)(NSError *))failure;
+
+- (void)clearAllStoreFile;
 
 // 判断是否已取的GitHub认证
 @property (nonatomic, getter = isAuthenticated, readonly) BOOL authenticated;
