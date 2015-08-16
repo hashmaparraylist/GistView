@@ -121,7 +121,10 @@
 
         [_sharedClient deleteAuthorization:^{
             [MBProgressHUD hideHUDForView:self.view animated:YES];
+            // clear local storge
             [_sharedClient clearAllStoreFile];
+            // clear image
+            self.avatarUrl.image = [UIImage imageNamed:@"Placeholder"];
             // call the authentize
             [_sharedClient authorize];
         } failure:^(NSError *error) {
