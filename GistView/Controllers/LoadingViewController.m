@@ -10,9 +10,12 @@
 #import "GitHubClient.h"
 #import "GitHubUser.h"
 #import "LoadingViewController.h"
+#import <AFNetworking/UIKit+AFNetworking.h>
 
 @interface LoadingViewController () <UIAlertViewDelegate>
-
+@property (weak, nonatomic) IBOutlet UIButton *loginBtn;
+@property (weak, nonatomic) IBOutlet UIButton *reLoginBtn;
+@property (weak, nonatomic) IBOutlet UIImageView *avatarUrl;
 @end
 
 @implementation LoadingViewController {
@@ -23,14 +26,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     // 注册NSNotification
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(authorizedSuccess:) name:GitHubAuthenticatedNotifiactionSuccess object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(authorizedFailure:) name:GitHubAuthenticatedNotifiactionFailure object:nil];
+    
+    self.avatarUrl.layer.cornerRadius = self.avatarUrl.bounds.size.width / 2;
+    self.avatarUrl.clipsToBounds = true;
+    
     _sharedClient = [GitHubClient sharedInstance];
     if (!_sharedClient.isAuthenticated) {
-        [_sharedClient authorize];
+//        [_sharedClient authorize];
+        self.loginBtn.hidden = YES;
+        self.reLoginBtn.titleLabel.text = @"登陆";
+        
     } else {
-        [self authorizedSuccess:nil];
+//        [self authorizedSuccess:nil];
+        self.loginBtn.hidden = NO;
+        self.reLoginBtn.titleLabel.text = @"使用其他账户登陆";
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString *image = (NSString *)[defaults stringForKey:GitHubAuthorizeContentKeyAvatarURL];
+        
+        [self.avatarUrl setImageWithURL:[NSURL URLWithString:image] placeholderImage:[UIImage imageNamed:@"Placeholder"]];
     }
 }
 
@@ -84,6 +101,48 @@
                                           otherButtonTitles:nil];
     [alert setTag:100];
     [alert show];
+}
+
+#pragma mark - Actions
+
+- (IBAction)authorize:(id)sender {
+    if (_sharedClient.isAuthenticated) {
+        [self authorizedSuccess:nil];
+    } else {
+        [_sharedClient authorize];
+    }
+}
+
+- (IBAction)reAuthorize:(id)sender {
+    if (_sharedClient.isAuthenticated) {
+        // clear session
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.labelText = @"准备重新登陆...";
+
+        [_sharedClient deleteAuthorization:^{
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            // clear local storge
+            [_sharedClient clearAllStoreFile];
+            // clear image
+            self.avatarUrl.image = [UIImage imageNamed:@"Placeholder"];
+            // call the authentize
+            [_sharedClient authorize];
+        } failure:^(NSError *error) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            NSString *errorMessage = error.userInfo[@"message"];
+            NSLog(@"syncAuthenticatedUserInfo-> %@", errorMessage);
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"错误"
+                                                            message:errorMessage
+                                                           delegate:self
+                                                  cancelButtonTitle:@"确认"
+                                                  otherButtonTitles:nil];
+            [alert setTag:100];
+            [alert show];
+        }];
+    } else {
+        // call the authentize
+        [_sharedClient authorize];
+    }
 }
 
 #pragma mark - UIAlertViewDelegate

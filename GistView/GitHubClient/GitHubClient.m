@@ -38,12 +38,18 @@
     self = [super init];
     
     // load token from data file
-    NSString *path = [self authorizeFilePath];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-        NSData *data = [[NSData alloc] initWithContentsOfFile:path];
-        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-        self.token = [unarchiver decodeObjectForKey:@"token"];
-        [unarchiver finishDecoding];
+//    NSString *path = [self authorizeFilePath];
+//    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+//        NSData *data = [[NSData alloc] initWithContentsOfFile:path];
+//        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+//        self.token = [unarchiver decodeObjectForKey:GitHubAuthorizeContentKeyToken];
+//        [unarchiver finishDecoding];
+//    }
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *token = [defaults stringForKey:GitHubAuthorizeContentKeyToken];
+    if (token) {
+        self.token = token;
     }
     
     return self;
@@ -83,6 +89,11 @@
     
     NSString *urlString = [[NSString alloc] initWithFormat: GitHubApiAuthorize, baseURLString, GitHubClientID, @"gist", uuidString];
     NSURL *webUrl = [NSURL URLWithString:urlString];
+    
+    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: webUrl];
+    for (NSHTTPCookie *cookie in cookies) {
+        [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
+    }
     
     if(![self openURL:webUrl]) {
         // Error Handle
@@ -131,14 +142,11 @@
         }
         self.token = jsonObject[@"access_token"];
         // Save token to datefile
-        NSMutableData *data = [[NSMutableData alloc] init];
-        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-        [archiver encodeObject:self.token forKey:@"token"];
-        [archiver finishEncoding];
-        [data writeToFile:[self authorizeFilePath] atomically:YES];
+        [self saveFileWithKey:GitHubAuthorizeContentKeyToken value:self.token];
         // Notify ViewController authorize is success
         [[NSNotificationCenter defaultCenter] postNotificationName:GitHubAuthenticatedNotifiactionSuccess object:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self clearAllStoreFile];
         [[NSNotificationCenter defaultCenter] postNotificationName:GitHubAuthenticatedNotifiactionFailure object:error];
     }];
 }
@@ -150,9 +158,15 @@
     success:^(AFHTTPRequestOperation *operation, id responseObject) {
         GitHubUser *user = [[GitHubUser alloc] initWithDictionary:responseObject];
         _authenticatedUser = user;
+        // save user id and avatar url to file
+        [self saveFileWithKey:GitHubAuthorizeContentKeyUserID value:user.login];
+        [self saveFileWithKey:GitHubAuthorizeContentKeyAvatarURL value:user.avatarUrl];
+        
         success(user);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         _authenticatedUser = nil;
+        _token = nil;
+        [self clearAllStoreFile];
         failure(error);
     }];
 
@@ -186,7 +200,38 @@
     return [[self doucmentsDirecotry] stringByAppendingPathComponent:@"gistview.plist"];
 }
 
+- (void)clearAllStoreFile {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:GitHubAuthorizeContentKeyAvatarURL];
+    [defaults removeObjectForKey:GitHubAuthorizeContentKeyToken];
+    [defaults removeObjectForKey:GitHubAuthorizeContentKeyUserID];
+    [defaults synchronize];
+}
+
+- (AFHTTPRequestOperation *)deleteAuthorization:(void (^)(void))success failure:(void(^)(NSError *))failure {
+    NSString *url = [NSString stringWithFormat:GitHubApiRevokeAuthorization, GitHubURLApiEndpoint, GitHubClientID, self.token];
+    AFHTTPRequestOperation *operation = [self callApiByMethodEx:@"DELETE" url:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success();
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+    return operation;
+}
+
 # pragma mark - Private
+
+- (void)saveFileWithKey:(NSString *)key value:(id)value {
+//    NSMutableData *data = [[NSMutableData alloc] init];
+//    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+//    [archiver encodeObject:value forKey:key];
+//    [archiver finishEncoding];
+//    [data writeToFile:[self authorizeFilePath] atomically:YES];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [defaults setObject:value forKey:key];
+    [defaults synchronize];
+}
 
 // 通过URL获取Gists
 - (AFHTTPRequestOperation *)getGistsWithURL:(NSString *)url needToken:(BOOL)isNeedToken success:(void (^)(NSArray *))success failure:(void (^)(NSError *))failure {
@@ -201,6 +246,34 @@
         failure(error);
     }];
     
+    return operation;
+}
+
+// 调用GitHub API特别版
+- (AFHTTPRequestOperation *)callApiByMethodEx:(NSString *)method url:(NSString *)apiURL parameters:(NSDictionary *)parameters
+                                    success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    NSLog(@"%@ => %@", method, apiURL);
+    
+    NSError *serializationError = nil;
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [manager.requestSerializer setValue:GitHubBasicAuthorize forHTTPHeaderField:@"Authorization"];
+    
+    NSMutableURLRequest *request = [manager.requestSerializer requestWithMethod:method URLString:apiURL parameters:parameters error:&serializationError];
+    void (^successBlock)(AFHTTPRequestOperation*, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        //        NSLog(@"%@ SUCCESS => Response[%@]", method, responseObject);
+        success(operation, responseObject);
+    };
+    
+    void (^failureBlock)(AFHTTPRequestOperation*, id) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@ Failure => STATUS CODE:%ld, Error: %@", method, (long)operation.response.statusCode, error);
+        NSError *errorInfo = [self errorFromRequestOperation:operation];
+        failure(operation, errorInfo);
+    };
+    
+    AFHTTPRequestOperation *operation = [manager HTTPRequestOperationWithRequest:request success:successBlock failure:failureBlock];
+    [manager.operationQueue addOperation:operation];
     return operation;
 }
 
