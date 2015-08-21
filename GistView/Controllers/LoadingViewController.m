@@ -10,9 +10,10 @@
 #import "GitHubClient.h"
 #import "GitHubUser.h"
 #import "LoadingViewController.h"
+#import "AuthorizeViewController.h"
 #import <AFNetworking/UIKit+AFNetworking.h>
 
-@interface LoadingViewController () <UIAlertViewDelegate>
+@interface LoadingViewController () <UIAlertViewDelegate, AuthorizeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
 @property (weak, nonatomic) IBOutlet UIButton *reLoginBtn;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarUrl;
@@ -26,10 +27,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // 注册NSNotification
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(authorizedSuccess:) name:GitHubAuthenticatedNotifiactionSuccess object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(authorizedFailure:) name:GitHubAuthenticatedNotifiactionFailure object:nil];
     
     self.avatarUrl.layer.cornerRadius = self.avatarUrl.bounds.size.width / 2;
     self.avatarUrl.clipsToBounds = true;
@@ -61,8 +58,70 @@
 
 #pragma mark - Private
 
-// oauth认证成功
-- (void)authorizedSuccess:(NSNotification *) notification {
+- (void)openAuthorizeView {
+    AuthorizeViewController *vc = (AuthorizeViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"authorize"];
+    vc.delegate = self;
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+#pragma mark - Actions
+
+- (IBAction)authorize:(id)sender {
+    if (_sharedClient.isAuthenticated) {
+        [self authorizeView:nil authorizeSuccess:nil];
+    } else {
+        [self openAuthorizeView];
+    }
+}
+
+- (IBAction)reAuthorize:(id)sender {
+    if (_sharedClient.isAuthenticated) {
+        // clear session
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.labelText = @"准备重新登陆...";
+
+        [_sharedClient deleteAuthorization:^{
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            // clear local storge
+            [_sharedClient clearAllStoreFile];
+            // clear image
+            self.avatarUrl.image = [UIImage imageNamed:@"Placeholder"];
+            // call the authentize
+            [self openAuthorizeView];
+        } failure:^(NSError *error) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            NSString *errorMessage = error.userInfo[@"message"];
+            NSLog(@"syncAuthenticatedUserInfo-> %@", errorMessage);
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"错误"
+                                                            message:errorMessage
+                                                           delegate:self
+                                                  cancelButtonTitle:@"确认"
+                                                  otherButtonTitles:nil];
+            [alert setTag:100];
+            [alert show];
+        }];
+    } else {
+        [self openAuthorizeView];
+    }
+}
+
+#pragma mark - UIAlertViewDelegate
+
+-(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == 100) {
+        [_sharedClient authorize];
+    } else {
+        
+    }
+}
+
+#pragma mark - AuthorizeViewControllerDelegate
+
+-(void)authorizeView:(AuthorizeViewController *)viewController authorizeSuccess:(NSNotification *)notification {
+    if (viewController) {
+        [viewController dismissViewControllerAnimated:YES completion:nil];
+    }
+    
     // 获取认证用户的用户信息
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -88,10 +147,14 @@
     }];
 }
 
-// oauth认证失败
-- (void)authorizedFailure:(NSNotification *) error {
+-(void)authorizeView:(AuthorizeViewController *)viewController authorizeFailure:(NSNotification *)notification {
+    
+    if (viewController) {
+        [viewController dismissViewControllerAnimated:YES completion:nil];
+    }
+    
     [MBProgressHUD hideHUDForView:self.view animated:YES];
-    NSError *errorInfo = [error object];
+    NSError *errorInfo = [notification object];
     NSString *errorMessage = errorInfo.userInfo[@"message"];
     NSLog(@"authorizedFailure-> %@", errorMessage);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"错误"
@@ -101,58 +164,6 @@
                                           otherButtonTitles:nil];
     [alert setTag:100];
     [alert show];
-}
-
-#pragma mark - Actions
-
-- (IBAction)authorize:(id)sender {
-    if (_sharedClient.isAuthenticated) {
-        [self authorizedSuccess:nil];
-    } else {
-        [_sharedClient authorize];
-    }
-}
-
-- (IBAction)reAuthorize:(id)sender {
-    if (_sharedClient.isAuthenticated) {
-        // clear session
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.labelText = @"准备重新登陆...";
-
-        [_sharedClient deleteAuthorization:^{
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            // clear local storge
-            [_sharedClient clearAllStoreFile];
-            // clear image
-            self.avatarUrl.image = [UIImage imageNamed:@"Placeholder"];
-            // call the authentize
-            [_sharedClient authorize];
-        } failure:^(NSError *error) {
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            NSString *errorMessage = error.userInfo[@"message"];
-            NSLog(@"syncAuthenticatedUserInfo-> %@", errorMessage);
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"错误"
-                                                            message:errorMessage
-                                                           delegate:self
-                                                  cancelButtonTitle:@"确认"
-                                                  otherButtonTitles:nil];
-            [alert setTag:100];
-            [alert show];
-        }];
-    } else {
-        // call the authentize
-        [_sharedClient authorize];
-    }
-}
-
-#pragma mark - UIAlertViewDelegate
-
--(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if (alertView.tag == 100) {
-        [_sharedClient authorize];
-    } else {
-        
-    }
 }
 
 @end

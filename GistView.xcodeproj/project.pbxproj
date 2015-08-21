@@ -27,6 +27,7 @@
 		82994E1B1B3DB9BF00B6FDE8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82994E1A1B3DB9BF00B6FDE8 /* Images.xcassets */; };
 		82994E1E1B3DB9BF00B6FDE8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82994E1C1B3DB9BF00B6FDE8 /* LaunchScreen.xib */; };
 		82994E2A1B3DB9C000B6FDE8 /* GistViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 82994E291B3DB9C000B6FDE8 /* GistViewTests.m */; };
+		82F842C91B878ADD00B0309F /* AuthorizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82F842C81B878ADD00B0309F /* AuthorizeViewController.m */; };
 		FE0DCA191FA177A454ACD3FE /* Pods_GistView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7529C3B2C03AF6EE879C6125 /* Pods_GistView.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -79,6 +80,8 @@
 		82994E231B3DB9C000B6FDE8 /* GistViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GistViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		82994E281B3DB9C000B6FDE8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82994E291B3DB9C000B6FDE8 /* GistViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GistViewTests.m; sourceTree = "<group>"; };
+		82F842C71B878ADD00B0309F /* AuthorizeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthorizeViewController.h; sourceTree = "<group>"; };
+		82F842C81B878ADD00B0309F /* AuthorizeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthorizeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +144,8 @@
 				82192AB11B51482500428545 /* RawFileViewController.m */,
 				82192AB31B51518500428545 /* AllGistsViewController.h */,
 				82192AB41B51518500428545 /* AllGistsViewController.m */,
+				82F842C71B878ADD00B0309F /* AuthorizeViewController.h */,
+				82F842C81B878ADD00B0309F /* AuthorizeViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -382,6 +387,7 @@
 				82192AB51B51518500428545 /* AllGistsViewController.m in Sources */,
 				82994E131B3DB9BF00B6FDE8 /* AppDelegate.m in Sources */,
 				825E57A61B4183C900C84050 /* GitHubUser.m in Sources */,
+				82F842C91B878ADD00B0309F /* AuthorizeViewController.m in Sources */,
 				82994E101B3DB9BF00B6FDE8 /* main.m in Sources */,
 				82192AB21B51482500428545 /* RawFileViewController.m in Sources */,
 				823725CB1B3F1AFF0054AEAE /* GitHubClient.m in Sources */,
