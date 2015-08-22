@@ -80,6 +80,9 @@
                             </webView>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fRD-OE-9OZ">
                                 <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <offsetWrapper key="textShadowOffset" horizontal="0.0" vertical="0.0"/>
+                                </textAttributes>
                                 <items>
                                     <navigationItem title="GitHub授权" id="gHx-Kk-Edk">
                                         <barButtonItem key="leftBarButtonItem" title="取消" id="ACr-TS-9nG">
@@ -91,18 +94,19 @@
                                 </items>
                             </navigationBar>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="fRD-OE-9OZ" firstAttribute="leading" secondItem="9QF-3y-YOH" secondAttribute="leading" id="A3Z-1X-6jK"/>
-                            <constraint firstItem="fRD-OE-9OZ" firstAttribute="top" secondItem="Y1Z-I0-aBG" secondAttribute="bottom" id="GqB-uw-Oee"/>
-                            <constraint firstItem="9QF-3y-YOH" firstAttribute="top" secondItem="fRD-OE-9OZ" secondAttribute="bottom" id="R5m-hd-M7x"/>
-                            <constraint firstItem="ihw-Td-mcf" firstAttribute="top" secondItem="9QF-3y-YOH" secondAttribute="bottom" id="e0F-KA-gZf"/>
-                            <constraint firstAttribute="trailing" secondItem="9QF-3y-YOH" secondAttribute="trailing" id="fN1-Lv-Y7Q"/>
-                            <constraint firstItem="9QF-3y-YOH" firstAttribute="leading" secondItem="XOF-cC-sUt" secondAttribute="leading" id="m5t-Lo-cw0"/>
-                            <constraint firstItem="fRD-OE-9OZ" firstAttribute="trailing" secondItem="9QF-3y-YOH" secondAttribute="trailing" id="vfK-eZ-RxK"/>
+                            <constraint firstItem="9QF-3y-YOH" firstAttribute="top" secondItem="fRD-OE-9OZ" secondAttribute="bottom" id="0lE-ir-fgF"/>
+                            <constraint firstItem="fRD-OE-9OZ" firstAttribute="top" secondItem="Y1Z-I0-aBG" secondAttribute="bottom" id="9Y9-NJ-JcC"/>
+                            <constraint firstItem="9QF-3y-YOH" firstAttribute="top" secondItem="fRD-OE-9OZ" secondAttribute="bottom" id="GU7-tP-1x7"/>
+                            <constraint firstItem="ihw-Td-mcf" firstAttribute="top" secondItem="9QF-3y-YOH" secondAttribute="bottom" id="hKr-SL-Kdr"/>
+                            <constraint firstAttribute="trailing" secondItem="fRD-OE-9OZ" secondAttribute="trailing" id="qgQ-Cw-eQe"/>
+                            <constraint firstItem="9QF-3y-YOH" firstAttribute="leading" secondItem="XOF-cC-sUt" secondAttribute="leading" id="zgu-px-Zdc"/>
+                            <constraint firstAttribute="trailing" secondItem="9QF-3y-YOH" secondAttribute="trailing" id="zkT-dZ-uSm"/>
+                            <constraint firstItem="fRD-OE-9OZ" firstAttribute="leading" secondItem="XOF-cC-sUt" secondAttribute="leading" id="zwB-lm-ydI"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="navigationBar" destination="fRD-OE-9OZ" id="zUZ-gu-cD2"/>
                         <outlet property="webView" destination="9QF-3y-YOH" id="2cf-0p-2eq"/>
                     </connections>
                 </viewController>

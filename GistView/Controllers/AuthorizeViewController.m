@@ -9,7 +9,8 @@
 #import "GitHubClient.h"
 #import "AuthorizeViewController.h"
 
-@interface AuthorizeViewController ()
+@interface AuthorizeViewController () <UINavigationBarDelegate>
+@property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
 @end
 
@@ -34,6 +35,9 @@
     // register NSNotification
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(authorizedSuccess:) name:GitHubAuthenticatedNotifiactionSuccess object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(authorizedFailure:) name:GitHubAuthenticatedNotifiactionFailure object:nil];
+    
+    // set delegate
+    self.navigationBar.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -55,6 +59,12 @@
 
 - (IBAction)cancel:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - UINavigationDelegate
+
+- (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar {
+    return UIBarPositionTopAttached;
 }
 
 @end
