@@ -13,10 +13,27 @@
 #pragma mark - Public
 
 + (NSString *)formaterDateTime: (NSString *)dateTime formatterString:(NSString *)formatter {
+    
+    NSTimeZone* sourceTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
+    NSTimeZone* destinationTimeZone = [NSTimeZone localTimeZone];
+    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:formatter];
+    [dateFormatter setTimeZone:sourceTimeZone];
+    
+    
     NSDate *rawDate = [dateFormatter dateFromString:dateTime];
-    return [NSDateFormatter localizedStringFromDate:rawDate dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterShortStyle];
+    
+    NSDateFormatter *localFormatter = [[NSDateFormatter alloc] init];
+    
+    [localFormatter setTimeZone:destinationTimeZone];
+
+    [localFormatter setDateStyle:NSDateFormatterMediumStyle];
+    [localFormatter setTimeStyle:NSDateFormatterShortStyle];
+    
+    return [localFormatter stringFromDate:rawDate];
+//    
+//    return [localFormatter localizedStringFromDate:rawDate dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterShortStyle];
 }
 
 #pragma mark - Private
