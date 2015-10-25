@@ -27,7 +27,7 @@
 		82994E1B1B3DB9BF00B6FDE8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82994E1A1B3DB9BF00B6FDE8 /* Images.xcassets */; };
 		82994E1E1B3DB9BF00B6FDE8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82994E1C1B3DB9BF00B6FDE8 /* LaunchScreen.xib */; };
 		82F842C91B878ADD00B0309F /* AuthorizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82F842C81B878ADD00B0309F /* AuthorizeViewController.m */; };
-		FE0DCA191FA177A454ACD3FE /* Pods_GistView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7529C3B2C03AF6EE879C6125 /* Pods_GistView.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		FE0DCA191FA177A454ACD3FE /* Pods_GistView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7529C3B2C03AF6EE879C6125 /* Pods_GistView.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
