@@ -7,6 +7,7 @@
 //
 
 #import "GitHubClient.h"
+#import "Keys.h"
 #import "AuthorizeViewController.h"
 
 @interface AuthorizeViewController () <UINavigationBarDelegate>

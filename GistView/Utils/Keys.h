@@ -15,6 +15,6 @@ static NSString * const GitHubClientSecret = @"f30e7b2071b7dc763db53a38c0ad4528d
 static NSString * const GitHubBasicAuthorize = @"Basic ZmFmYjBhZjFjNzkyYWZjOGFhYzY6ZjMwZTdiMjA3MWI3ZGM3NjNkYjUzYTM4YzBhZDQ1MjhkYWRiMDEzYQ==";
 
 // AD Setting
-static NSString * const AdMobUnitID = @"ca-app-pub-1226355392915828/9474154999"
+static NSString * const AdMobUnitID = @"ca-app-pub-1226355392915828/9474154999";
 
 #endif /* Keys_h */
