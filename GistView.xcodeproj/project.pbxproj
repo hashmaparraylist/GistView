@@ -34,6 +34,7 @@
 		32330F415D31AA57AF1A8AC4 /* Pods-GistView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GistView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GistView/Pods-GistView.debug.xcconfig"; sourceTree = "<group>"; };
 		7529C3B2C03AF6EE879C6125 /* Pods_GistView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GistView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		77F28DD0C07AE92DD3EB8D3D /* Pods-GistView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GistView.release.xcconfig"; path = "Pods/Target Support Files/Pods-GistView/Pods-GistView.release.xcconfig"; sourceTree = "<group>"; };
+		821546DD1BDE43EB008FCB05 /* Keys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Keys.h; sourceTree = "<group>"; };
 		82192AAD1B4C226D00428545 /* GistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GistViewController.h; sourceTree = "<group>"; };
 		82192AAE1B4C226D00428545 /* GistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GistViewController.m; sourceTree = "<group>"; };
 		82192AB01B51482500428545 /* RawFileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RawFileViewController.h; sourceTree = "<group>"; };
@@ -101,6 +102,7 @@
 			children = (
 				8244DA491B64CDC4002398AC /* Util.h */,
 				8244DA4A1B64CDC4002398AC /* Util.m */,
+				821546DD1BDE43EB008FCB05 /* Keys.h */,
 			);
 			path = Utils;
 			sourceTree = "<group>";

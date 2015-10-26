@@ -10,6 +10,7 @@
 #import "GitHubClient.h"
 #import "GitHubUser.h"
 #import "Gist.h"
+#import "Keys.h"
 
 @interface GitHubClient ()
 @property (nonatomic, strong, readwrite) NSString *token;

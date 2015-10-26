@@ -6,13 +6,17 @@
 //  Copyright (c) 2015年 Sebastian Qu. All rights reserved.
 //
 
+@import GoogleMobileAds;
+
 #import "Gist.h"
 #import "GitHubClient.h"
 #import "GitHubUser.h"
 #import "GistCell.h"
 #import "GistViewController.h"
+#import "Keys.h"
 #import "MyGistViewController.h"
 #import <MJRefresh/MJRefresh.h>
+
 
 static NSString * const NothingFouncdCellIdentifier = @"NothingFoundCell";
 static NSString * const LoadingCellIdentifier = @"LoadingCell";
@@ -61,6 +65,13 @@ static NSString * const GistCellIdentifier = @"GistCell";
     }];
     
     [tableView.header beginRefreshing];
+    
+    NSLog(@"Google Mobile Ads SDK version: %@", [GADRequest sdkVersion]);
+    
+    GADBannerView *adBanner = [[GADBannerView alloc] init];
+    adBanner.adUnitID = AdMobUnitID;
+    adBanner.rootViewController = self;
+    
 }
 
 - (void)didReceiveMemoryWarning {

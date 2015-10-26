@@ -27,11 +27,6 @@ static NSString * const GitHubApiListAuthenticatedUserStarredGist = @"%@/gists/s
 //static NSString * const GitHubApiListAuthenticatedUserPublicGist = @"%@/gists/public";  // List the Authenticated user's public gists
 static NSString * const GitHubApiRevokeAuthorization = @"%@/applications/%@/tokens/%@";
 
-// APP Setting
-static NSString * const GitHubClientID = @"fafb0af1c792afc8aac6";
-static NSString * const GitHubClientSecret = @"f30e7b2071b7dc763db53a38c0ad4528dadb013a";
-static NSString * const GitHubBasicAuthorize = @"Basic ZmFmYjBhZjFjNzkyYWZjOGFhYzY6ZjMwZTdiMjA3MWI3ZGM3NjNkYjUzYTM4YzBhZDQ1MjhkYWRiMDEzYQ==";
-
 // NSError Domain
 static NSString * const GitHubClientErrorDomain = @"GitHubClientErrorDomain";
 
