@@ -9,12 +9,12 @@
 #ifndef Keys_h
 #define Keys_h
 
-// APP Setting
-static NSString * const GitHubClientID = @"fafb0af1c792afc8aac6";
-static NSString * const GitHubClientSecret = @"f30e7b2071b7dc763db53a38c0ad4528dadb013a";
-static NSString * const GitHubBasicAuthorize = @"Basic ZmFmYjBhZjFjNzkyYWZjOGFhYzY6ZjMwZTdiMjA3MWI3ZGM3NjNkYjUzYTM4YzBhZDQ1MjhkYWRiMDEzYQ==";
+// GitHub APP Setting
+static NSString * const GitHubClientID = @"";
+static NSString * const GitHubClientSecret = @"";
+static NSString * const GitHubBasicAuthorize = @"";
 
-// AD Setting
-static NSString * const AdMobUnitID = @"ca-app-pub-1226355392915828/9474154999";
+// Google AdMob Setting
+static NSString * const AdMobUnitID = @"";
 
 #endif /* Keys_h */

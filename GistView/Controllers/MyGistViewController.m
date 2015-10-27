@@ -70,8 +70,8 @@ static NSString * const GistCellIdentifier = @"GistCell";
     
     NSLog(@"Google Mobile Ads SDK version: %@", [GADRequest sdkVersion]);
     GADRequest *request = [GADRequest request];
-    NSString *adId = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
-    request.testDevices = @[adId, @"2077ef9a63d2b398840261c8221a0c9b"];
+//    NSString *adId = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+//    request.testDevices = @[adId];
     self.adBannerView.adUnitID = AdMobUnitID;
     self.adBannerView.rootViewController = self;
     //self.adBannerView.delegate = self;
@@ -169,6 +169,18 @@ static NSString * const GistCellIdentifier = @"GistCell";
 }
 
 #pragma mark - UITableViewDelegate
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    GADBannerView *topAdBanner = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
+    topAdBanner.adUnitID = AdMobUnitID;
+    topAdBanner.rootViewController = self;
+    [topAdBanner loadRequest:[GADRequest request]];
+    return topAdBanner;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 50.0;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];

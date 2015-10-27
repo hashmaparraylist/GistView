@@ -5,5 +5,4 @@ target 'GistView' do
   pod 'AFNetworking', '>= 2.5'
   pod 'MBProgressHUD', '~> 0.9.1'
   pod 'MJRefresh'
-  pod 'Google-Mobile-Ads-SDK'
 end

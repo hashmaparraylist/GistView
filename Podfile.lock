@@ -20,19 +20,16 @@ PODS:
   - AFNetworking/UIKit (2.5.4):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - Google-Mobile-Ads-SDK (7.3.1)
   - MBProgressHUD (0.9.1)
   - MJRefresh (2.0.4)
 
 DEPENDENCIES:
   - AFNetworking (>= 2.5)
-  - Google-Mobile-Ads-SDK
   - MBProgressHUD (~> 0.9.1)
   - MJRefresh
 
 SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
-  Google-Mobile-Ads-SDK: 3647bfddc7384c514ab96a8bed86d98b31e623e4
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   MJRefresh: ea153717001d3c02444bd22b75c111d2937d2104
 

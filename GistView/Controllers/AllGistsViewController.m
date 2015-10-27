@@ -6,6 +6,8 @@
 //  Copyright (c) 2015年 Sebastian Qu. All rights reserved.
 //
 
+@import GoogleMobileAds;
+
 #import "AllGistsViewController.h"
 #import "Gist.h"
 #import "GitHubClient.h"
@@ -13,6 +15,8 @@
 #import "GistCell.h"
 #import "GistViewController.h"
 #import <MJRefresh/MJRefresh.h>
+#import <AdSupport/AdSupport.h>
+#import "Keys.h"
 
 static NSString * const NothingFouncdCellIdentifier = @"NothingFoundCell";
 static NSString * const LoadingCellIdentifier = @"LoadingCell";
@@ -49,6 +53,7 @@ static NSString * const GistCellIdentifier = @"GistCell";
     }];
     
     [tableView.header beginRefreshing];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -112,6 +117,18 @@ static NSString * const GistCellIdentifier = @"GistCell";
 }
 
 #pragma mark - UITableViewDelegate
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    GADBannerView *_adBanner = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
+    _adBanner.adUnitID = AdMobUnitID;
+    _adBanner.rootViewController = self;
+    [_adBanner loadRequest:[GADRequest request]];
+    return _adBanner;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 50.0;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
