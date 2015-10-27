@@ -16,6 +16,7 @@
 #import "Keys.h"
 #import "MyGistViewController.h"
 #import <MJRefresh/MJRefresh.h>
+#import <AdSupport/AdSupport.h>
 
 
 static NSString * const NothingFouncdCellIdentifier = @"NothingFoundCell";
@@ -24,6 +25,7 @@ static NSString * const GistCellIdentifier = @"GistCell";
 
 @interface MyGistViewController () <UITableViewDataSource, UITableViewDelegate, GADBannerViewDelegate>
 
+@property (weak, nonatomic) IBOutlet GADBannerView *adBannerView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segement;
 
@@ -34,7 +36,6 @@ static NSString * const GistCellIdentifier = @"GistCell";
 
 @implementation MyGistViewController {
     BOOL _isLoading;
-    GADBannerView *_adBannerView;
 }
 
 #pragma mark - Lifecycle
@@ -68,15 +69,13 @@ static NSString * const GistCellIdentifier = @"GistCell";
     [tableView.header beginRefreshing];
     
     NSLog(@"Google Mobile Ads SDK version: %@", [GADRequest sdkVersion]);
-    
-    _adBannerView = [[GADBannerView alloc] init];
-    _adBannerView.adUnitID = AdMobUnitID;
-    _adBannerView.rootViewController = self;
-    self.view.frame = CGRectMake(0, 0, self.view.window.frame.size.width, self.view.window.frame.size.height - 48);
-    _adBannerView.frame = CGRectMake(0,self.view.window.frame.size.height - 48, self.view.window.frame.size.width, 48);
-    [self.view.window addSubview:_adBannerView];
-    _adBannerView.delegate = self;
-    [_adBannerView loadRequest:[GADRequest request]];
+    GADRequest *request = [GADRequest request];
+    NSString *adId = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+    request.testDevices = @[adId, @"2077ef9a63d2b398840261c8221a0c9b"];
+    self.adBannerView.adUnitID = AdMobUnitID;
+    self.adBannerView.rootViewController = self;
+    //self.adBannerView.delegate = self;
+    [self.adBannerView loadRequest:request];
 }
 
 - (void)didReceiveMemoryWarning {

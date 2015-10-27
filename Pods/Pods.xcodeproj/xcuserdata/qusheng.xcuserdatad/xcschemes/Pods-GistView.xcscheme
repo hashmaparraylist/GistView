@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '665EEF64A79D93AB9927C88C'
+               BlueprintIdentifier = '1820113438ABC88E3DDA8332'
                BlueprintName = 'Pods-GistView'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'Pods_GistView.framework'>
