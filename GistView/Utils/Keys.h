@@ -15,6 +15,6 @@ static NSString * const GitHubClientSecret = @"";
 static NSString * const GitHubBasicAuthorize = @"";
 
 // Google AdMob Setting
-static NSString * const AdMobUnitID = @"";
-
+static NSString * const MyAdMobUnitID = @"";
+static NSString * const AllAdMobUnitID = @"";
 #endif /* Keys_h */

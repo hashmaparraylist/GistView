@@ -25,7 +25,6 @@ static NSString * const GistCellIdentifier = @"GistCell";
 
 @interface MyGistViewController () <UITableViewDataSource, UITableViewDelegate, GADBannerViewDelegate>
 
-@property (weak, nonatomic) IBOutlet GADBannerView *adBannerView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segement;
 
@@ -67,15 +66,6 @@ static NSString * const GistCellIdentifier = @"GistCell";
     }];
     
     [tableView.header beginRefreshing];
-    
-    NSLog(@"Google Mobile Ads SDK version: %@", [GADRequest sdkVersion]);
-    GADRequest *request = [GADRequest request];
-//    NSString *adId = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
-//    request.testDevices = @[adId];
-    self.adBannerView.adUnitID = AdMobUnitID;
-    self.adBannerView.rootViewController = self;
-    //self.adBannerView.delegate = self;
-    [self.adBannerView loadRequest:request];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -172,7 +162,7 @@ static NSString * const GistCellIdentifier = @"GistCell";
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     GADBannerView *topAdBanner = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
-    topAdBanner.adUnitID = AdMobUnitID;
+    topAdBanner.adUnitID = MyAdMobUnitID;
     topAdBanner.rootViewController = self;
     [topAdBanner loadRequest:[GADRequest request]];
     return topAdBanner;

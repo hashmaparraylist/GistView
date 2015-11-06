@@ -120,7 +120,7 @@ static NSString * const GistCellIdentifier = @"GistCell";
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     GADBannerView *_adBanner = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
-    _adBanner.adUnitID = AdMobUnitID;
+    _adBanner.adUnitID = AllAdMobUnitID;
     _adBanner.rootViewController = self;
     [_adBanner loadRequest:[GADRequest request]];
     return _adBanner;
