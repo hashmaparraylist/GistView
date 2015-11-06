@@ -6,20 +6,26 @@
 //  Copyright (c) 2015年 Sebastian Qu. All rights reserved.
 //
 
+@import GoogleMobileAds;
+
 #import "Gist.h"
 #import "GitHubClient.h"
 #import "GitHubUser.h"
 #import "GistCell.h"
 #import "GistViewController.h"
+#import "Keys.h"
 #import "MyGistViewController.h"
 #import <MJRefresh/MJRefresh.h>
+#import <AdSupport/AdSupport.h>
+
 
 static NSString * const NothingFouncdCellIdentifier = @"NothingFoundCell";
 static NSString * const LoadingCellIdentifier = @"LoadingCell";
 static NSString * const GistCellIdentifier = @"GistCell";
 
-@interface MyGistViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface MyGistViewController () <UITableViewDataSource, UITableViewDelegate, GADBannerViewDelegate>
 
+@property (weak, nonatomic) IBOutlet GADBannerView *adBannerView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segement;
 
@@ -61,6 +67,15 @@ static NSString * const GistCellIdentifier = @"GistCell";
     }];
     
     [tableView.header beginRefreshing];
+    
+    NSLog(@"Google Mobile Ads SDK version: %@", [GADRequest sdkVersion]);
+    GADRequest *request = [GADRequest request];
+//    NSString *adId = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+//    request.testDevices = @[adId];
+    self.adBannerView.adUnitID = AdMobUnitID;
+    self.adBannerView.rootViewController = self;
+    //self.adBannerView.delegate = self;
+    [self.adBannerView loadRequest:request];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -154,6 +169,18 @@ static NSString * const GistCellIdentifier = @"GistCell";
 }
 
 #pragma mark - UITableViewDelegate
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    GADBannerView *topAdBanner = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
+    topAdBanner.adUnitID = AdMobUnitID;
+    topAdBanner.rootViewController = self;
+    [topAdBanner loadRequest:[GADRequest request]];
+    return topAdBanner;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 50.0;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];

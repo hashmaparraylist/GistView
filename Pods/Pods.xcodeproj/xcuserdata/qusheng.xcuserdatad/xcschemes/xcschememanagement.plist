@@ -4,17 +4,17 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-GistView-AFNetworking.xcscheme</key>
+		<key>AFNetworking.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-GistView-MBProgressHUD.xcscheme</key>
+		<key>MBProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-GistView-MJRefresh.xcscheme</key>
+		<key>MJRefresh.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -27,22 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>A0C36A581F01E125526E446E</key>
+		<key>021549B977548570AB83332607BECFDB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BB07046DCA81D9E529AA9ECA</key>
+		<key>6847254D016329D4A531D34ED2B6DF81</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D21380F6E68CAB4BAFFEF94A</key>
+		<key>C91A46012F8822DFDBAC8BC32FCC9001</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F09ED5F0739504F36A8AA99D</key>
+		<key>E61CE3B6DFA1FE6B3E296965C76C0E10</key>
 		<dict>
 			<key>primary</key>
 			<true/>
