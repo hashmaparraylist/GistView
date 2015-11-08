@@ -45,14 +45,14 @@ static NSString * const GistCellIdentifier = @"GistCell";
     
     __weak typeof(self) weakSelf = self;
     __weak UITableView *tableView = self.tableView;
-    tableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             
             [weakSelf searchAllGists:tableView];
         });
     }];
     
-    [tableView.header beginRefreshing];
+    [tableView.mj_header beginRefreshing];
     
 }
 
@@ -68,11 +68,11 @@ static NSString * const GistCellIdentifier = @"GistCell";
     [sharedClient listAllGist:^(NSArray *gists) {
         self.gists = [NSMutableArray arrayWithArray:gists];
         [tableView reloadData];
-        [tableView.header endRefreshing];
+        [tableView.mj_header endRefreshing];
     } failure:^(NSError *error) {
         self.gists = [[NSMutableArray alloc] initWithCapacity:10];
         [tableView reloadData];
-        [tableView.header endRefreshing];
+        [tableView.mj_header endRefreshing];
     }];
 }
 
@@ -99,7 +99,7 @@ static NSString * const GistCellIdentifier = @"GistCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (![self.tableView.header isRefreshing]) {
+    if (![self.tableView.mj_header isRefreshing]) {
         if ([self.gists count] == 0) {
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NothingFouncdCellIdentifier forIndexPath:indexPath];
             return cell;

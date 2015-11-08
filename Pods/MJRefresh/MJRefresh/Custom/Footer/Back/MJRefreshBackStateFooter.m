@@ -11,7 +11,7 @@
 @interface MJRefreshBackStateFooter()
 {
     /** 显示刷新状态的label */
-    __weak UILabel *_stateLabel;
+    __unsafe_unretained UILabel *_stateLabel;
 }
 /** 所有状态对应的文字 */
 @property (strong, nonatomic) NSMutableDictionary *stateTitles;
@@ -41,6 +41,10 @@
     if (title == nil) return;
     self.stateTitles[@(state)] = title;
     self.stateLabel.text = self.stateTitles[@(self.state)];
+}
+
+- (NSString *)titleForState:(MJRefreshState)state {
+  return self.stateTitles[@(state)];
 }
 
 #pragma mark - 重写父类的方法

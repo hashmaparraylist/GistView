@@ -10,7 +10,7 @@
 
 @interface MJRefreshBackNormalFooter()
 {
-    __weak UIImageView *_arrowView;
+    __unsafe_unretained UIImageView *_arrowView;
 }
 @property (weak, nonatomic) UIActivityIndicatorView *loadingView;
 @end
@@ -20,22 +20,39 @@
 - (UIImageView *)arrowView
 {
     if (!_arrowView) {
-        UIImageView *arrowView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:MJRefreshSrcName(@"arrow.png")]];
+        UIImage *image = [UIImage imageNamed:MJRefreshSrcName(@"arrow.png")] ?: [UIImage imageNamed:MJRefreshFrameworkSrcName(@"arrow.png")];
+        UIImageView *arrowView = [[UIImageView alloc] initWithImage:image];
         [self addSubview:_arrowView = arrowView];
     }
     return _arrowView;
 }
 
+
 - (UIActivityIndicatorView *)loadingView
 {
     if (!_loadingView) {
-        UIActivityIndicatorView *loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        UIActivityIndicatorView *loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:self.activityIndicatorViewStyle];
         loadingView.hidesWhenStopped = YES;
         [self addSubview:_loadingView = loadingView];
     }
     return _loadingView;
 }
+
+- (void)setActivityIndicatorViewStyle:(UIActivityIndicatorViewStyle)activityIndicatorViewStyle
+{
+    _activityIndicatorViewStyle = activityIndicatorViewStyle;
+    
+    self.loadingView = nil;
+    [self setNeedsLayout];
+}
 #pragma makr - 重写父类的方法
+- (void)prepare
+{
+    [super prepare];
+    
+    self.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+}
+
 - (void)placeSubviews
 {
     [super placeSubviews];

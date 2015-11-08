@@ -55,7 +55,7 @@ static NSString * const GistCellIdentifier = @"GistCell";
     __weak typeof(self) weakSelf = self;
     __weak UITableView *tableView = self.tableView;
     __weak UISegmentedControl *segment = self.segement;
-    tableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             if (segment.selectedSegmentIndex == 0) {
                 [weakSelf searchAllGists:tableView];
@@ -65,7 +65,7 @@ static NSString * const GistCellIdentifier = @"GistCell";
         });
     }];
     
-    [tableView.header beginRefreshing];
+    [tableView.mj_header beginRefreshing];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -79,7 +79,7 @@ static NSString * const GistCellIdentifier = @"GistCell";
 - (IBAction)segmentValueChanged:(UISegmentedControl *)sender {
     [self.tableView reloadData];
     if ([[self targetArray] count] == 0) {
-        [self.tableView.header beginRefreshing];
+        [self.tableView.mj_header beginRefreshing];
     }
 }
 
@@ -90,11 +90,11 @@ static NSString * const GistCellIdentifier = @"GistCell";
     [sharedClient listAuthenticatedUserAllGist:^(NSArray *gists) {
         self.allGists = [NSMutableArray arrayWithArray:gists];
         [tableView reloadData];
-        [tableView.header endRefreshing];
+        [tableView.mj_header endRefreshing];
     } failure:^(NSError *error) {
         self.allGists = [[NSMutableArray alloc] initWithCapacity:10];
         [tableView reloadData];
-        [tableView.header endRefreshing];
+        [tableView.mj_header endRefreshing];
     }];
 }
 
@@ -103,11 +103,11 @@ static NSString * const GistCellIdentifier = @"GistCell";
     [sharedClient listAuthenticatedUserStarredGist:^(NSArray * gists) {
         self.starredGists = [NSMutableArray arrayWithArray:gists];
         [tableView reloadData];
-        [tableView.header endRefreshing];
+        [tableView.mj_header endRefreshing];
     } failure:^(NSError *error) {
         self.starredGists = [[NSMutableArray alloc] initWithCapacity:10];
         [tableView reloadData];
-        [tableView.header endRefreshing];
+        [tableView.mj_header endRefreshing];
     }];
 }
 
@@ -141,7 +141,7 @@ static NSString * const GistCellIdentifier = @"GistCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (![self.tableView.header isRefreshing]) {
+    if (![self.tableView.mj_header isRefreshing]) {
         if ([[self targetArray] count] == 0) {
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NothingFouncdCellIdentifier forIndexPath:indexPath];
             return cell;

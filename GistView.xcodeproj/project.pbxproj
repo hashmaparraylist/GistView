@@ -29,6 +29,7 @@
 		8244DA4B1B64CDC4002398AC /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 8244DA4A1B64CDC4002398AC /* Util.m */; };
 		825E57A31B417AD200C84050 /* LoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 825E57A21B417AD200C84050 /* LoadingViewController.m */; };
 		825E57A61B4183C900C84050 /* GitHubUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 825E57A51B4183C900C84050 /* GitHubUser.m */; };
+		826B06201BEF87AD00E834DF /* AFNetworkActivityLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 826B061F1BEF87AD00E834DF /* AFNetworkActivityLogger.m */; };
 		828896211B495A5200756967 /* GistCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8288961F1B495A5200756967 /* GistCell.m */; };
 		828896221B495A5200756967 /* GistCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 828896201B495A5200756967 /* GistCell.xib */; };
 		82994E101B3DB9BF00B6FDE8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 82994E0F1B3DB9BF00B6FDE8 /* main.m */; };
@@ -76,6 +77,8 @@
 		825E57A21B417AD200C84050 /* LoadingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingViewController.m; sourceTree = "<group>"; };
 		825E57A41B4183C900C84050 /* GitHubUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GitHubUser.h; sourceTree = "<group>"; };
 		825E57A51B4183C900C84050 /* GitHubUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GitHubUser.m; sourceTree = "<group>"; };
+		826B061E1BEF87AD00E834DF /* AFNetworkActivityLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityLogger.h; sourceTree = "<group>"; };
+		826B061F1BEF87AD00E834DF /* AFNetworkActivityLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkActivityLogger.m; sourceTree = "<group>"; };
 		8288961E1B495A5200756967 /* GistCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GistCell.h; sourceTree = "<group>"; };
 		8288961F1B495A5200756967 /* GistCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GistCell.m; sourceTree = "<group>"; };
 		828896201B495A5200756967 /* GistCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GistCell.xib; sourceTree = "<group>"; };
@@ -117,6 +120,7 @@
 		82025E751BDF721800903928 /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				826B061D1BEF87AD00E834DF /* AFNetworkActivityLogger */,
 				82025E781BDF743C00903928 /* GoogleMobileAds.framework */,
 			);
 			name = libs;
@@ -167,6 +171,15 @@
 				82F842C81B878ADD00B0309F /* AuthorizeViewController.m */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		826B061D1BEF87AD00E834DF /* AFNetworkActivityLogger */ = {
+			isa = PBXGroup;
+			children = (
+				826B061E1BEF87AD00E834DF /* AFNetworkActivityLogger.h */,
+				826B061F1BEF87AD00E834DF /* AFNetworkActivityLogger.m */,
+			);
+			path = AFNetworkActivityLogger;
 			sourceTree = "<group>";
 		};
 		82994E011B3DB9BF00B6FDE8 = {
@@ -369,6 +382,7 @@
 				82994E131B3DB9BF00B6FDE8 /* AppDelegate.m in Sources */,
 				825E57A61B4183C900C84050 /* GitHubUser.m in Sources */,
 				82F842C91B878ADD00B0309F /* AuthorizeViewController.m in Sources */,
+				826B06201BEF87AD00E834DF /* AFNetworkActivityLogger.m in Sources */,
 				82994E101B3DB9BF00B6FDE8 /* main.m in Sources */,
 				82192AB21B51482500428545 /* RawFileViewController.m in Sources */,
 				823725CB1B3F1AFF0054AEAE /* GitHubClient.m in Sources */,
